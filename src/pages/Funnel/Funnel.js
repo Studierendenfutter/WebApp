@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
+import ProgressBar from "../../components/ProgressBar";
+import useUserCategories from "../../hooks/useUserCategories";
+import postUser from "../../services/backend/postUser";
 
 const dayNames = [
   "Montag",
@@ -23,16 +26,21 @@ const prices = {
   other: "Preis für Nichtstudierende",
 };
 
+const TOTAL_FUNNEL_STEPS = 7;
+
 export default function Funnel() {
   const [userData, setUserData] = useState({
     email: "",
     days: [true, true, true, true, true, true],
-    semesterBreak: true,
+    semesterBreaks: true,
     meals: [true, true, true, true],
     places: [true, true, true],
-    userGroup: "students",
+    userCategoryId: 1,
     name: "",
+    city: "Münster",
   });
+
+  const userCategories = useUserCategories();
 
   const [funnelStep, setFunnelStep] = useState(0);
 
@@ -120,7 +128,7 @@ export default function Funnel() {
         <FunnelStep title="Auch in den Semesterferien?">
           <button
             onClick={() => {
-              updateUserData("semesterBreak", true);
+              updateUserData("semesterBreaks", true);
               nextStep();
             }}
           >
@@ -128,7 +136,7 @@ export default function Funnel() {
           </button>
           <button
             onClick={() => {
-              updateUserData("semesterBreak", false);
+              updateUserData("semesterBreaks", false);
               nextStep();
             }}
           >
@@ -172,10 +180,16 @@ export default function Funnel() {
               <input
                 type="radio"
                 key={priceKey}
-                checked={priceKey === userData.userGroup}
-                onClick={() => updateUserData("userGroup", priceKey)}
+                checked={userCategories[priceKey] === userData.userCategoryId}
+                onClick={() =>
+                  updateUserData("userCategoryId", userCategories[priceKey])
+                }
               />
-              <label onClick={() => updateUserData("userGroup", priceKey)}>
+              <label
+                onClick={() =>
+                  updateUserData("userCategoryId", userCategories[priceKey])
+                }
+              >
                 {prices[priceKey]}
               </label>
             </div>
@@ -197,7 +211,14 @@ export default function Funnel() {
             Wir verwenden deinen Namen ausschließlich für die Personalisierung
             deiner Mails.
           </label>
-          {nextStepButton}
+          <button
+            onClick={() => {
+              postUser(userData);
+              nextStep();
+            }}
+          >
+            Weiter
+          </button>
         </FunnelStep>
       )}
       {funnelStep === 7 && (
@@ -211,6 +232,11 @@ export default function Funnel() {
           <input type="text"></input>
         </FunnelStep>
       )}
+      <div style={{ marginTop: "10px" }}>
+        <ProgressBar
+          percent={((funnelStep + 1) * 100) / (TOTAL_FUNNEL_STEPS + 1)}
+        />
+      </div>
     </div>
   );
 }
