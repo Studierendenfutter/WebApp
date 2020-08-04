@@ -3,7 +3,7 @@ const local = {
 };
 
 const production = {
-  BACKEND_URL: "https://api.studierendenfutter.de:8000",
+  BACKEND_URL: "http://api.studierendenfutter.de:8000",
 };
 
 let config = local;
