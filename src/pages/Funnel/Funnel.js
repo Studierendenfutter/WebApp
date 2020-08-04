@@ -48,10 +48,6 @@ export default function Funnel() {
     setFunnelStep(funnelStep + 1);
   };
 
-  const lastStep = () => {
-    setFunnelStep(funnelStep + 2);
-  };
-
   const updateUserData = (name, value) => {
     setUserData({ ...userData, [name]: value });
   };
