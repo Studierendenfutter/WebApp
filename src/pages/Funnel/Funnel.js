@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
 import ProgressBar from "../../components/ProgressBar";
 import useUserCategories from "../../hooks/useUserCategories";
 import postUser from "../../services/backend/postUser";
+import useCanteens from "../../hooks/useCanteens";
+
+import "./Funnel.css";
 
 const dayNames = [
   "Montag",
@@ -26,7 +29,7 @@ const prices = {
   other: "Preis für Nichtstudierende",
 };
 
-const TOTAL_FUNNEL_STEPS = 7;
+const TOTAL_FUNNEL_STEPS = 8;
 
 export default function Funnel() {
   const [userData, setUserData] = useState({
@@ -39,6 +42,31 @@ export default function Funnel() {
     name: "",
     city: "Münster",
   });
+
+  const canteens = useCanteens({ city: userData.city });
+
+  useEffect(() => {
+    if (!userData.canteens && canteens) {
+      const cs = canteens.reduce((t, c) => {
+        t[c.id] = true;
+        return t;
+      }, {});
+      setUserData({ ...userData, canteens: cs });
+    }
+  }, [canteens, setUserData]); // eslint-disable-line
+
+  const canteensByType = useMemo(() => {
+    if (!canteens) return {};
+    return canteens.reduce((t, c) => {
+      const _t = { ...t };
+      if (!c.type) return t;
+      if (!_t[c.type]) {
+        _t[c.type] = [];
+      }
+      _t[c.type].push(c);
+      return _t;
+    }, {});
+  }, [canteens]);
 
   const userCategories = useUserCategories();
 
@@ -64,8 +92,25 @@ export default function Funnel() {
     updateUserData("meals", _meals);
   };
 
+  const setCanteensByType = (type, checked) => {
+    const _canteens = userData.canteens;
+    for (let cId in canteensByType[type]) {
+      _canteens[canteensByType[type][cId].id] = checked;
+    }
+    setUserData({ ...userData, canteens: _canteens });
+  };
+
+  const updateCanteen = (id, checked) => {
+    const _canteens = userData.canteens;
+    _canteens[id] = checked;
+    setUserData({ ...userData, canteens: _canteens });
+  };
+
   const nextStepButton = <button onClick={nextStep}>Weiter</button>;
 
+  if (!userCategories) {
+    return <div>Hey</div>;
+  }
   return (
     <div>
       {funnelStep === 0 && (
@@ -168,6 +213,62 @@ export default function Funnel() {
       )}
       {funnelStep === 5 && (
         <FunnelStep
+          title="Wunderbar. Für welche Orte möchtest du das Mittagsangebot angezeigt bekommen?
+            Du kannst dies auch noch genauer festlegen:"
+        >
+          {Object.keys(canteensByType).map((type) => {
+            const typeIsChecked = canteensByType[type].reduce(
+              (t, c) => t || (userData.canteens && userData.canteens[c.id]),
+              false
+            );
+            return (
+              <div>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={typeIsChecked}
+                    onChange={(e) => setCanteensByType(type, e.target.checked)}
+                  />
+                  <label
+                    onClick={() => setCanteensByType(type, !typeIsChecked)}
+                  >
+                    {type}
+                  </label>
+                </div>
+                <div className="sf-funnel-canteens-wrapper">
+                  {typeIsChecked &&
+                    canteensByType[type].map((canteen) => (
+                      <div>
+                        <input
+                          type="checkbox"
+                          checked={
+                            userData.canteens && userData.canteens[canteen.id]
+                          }
+                          onChange={(e) =>
+                            updateCanteen(canteen.id, e.target.checked)
+                          }
+                        />
+                        <label
+                          onClick={() =>
+                            updateCanteen(
+                              canteen.id,
+                              !userData.canteens[canteen.id]
+                            )
+                          }
+                        >
+                          {canteen.name}
+                        </label>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            );
+          })}
+          {nextStepButton}
+        </FunnelStep>
+      )}
+      {funnelStep === 6 && (
+        <FunnelStep
           title="Super, wir haben es fast geschafft. Jetzt müssen wir nur noch wissen, welchen Preis wir
         dir für die Mittagsgerichte anzeigen sollen:"
         >
@@ -193,7 +294,7 @@ export default function Funnel() {
           {nextStepButton}
         </FunnelStep>
       )}
-      {funnelStep === 6 && (
+      {funnelStep === 7 && (
         <FunnelStep
           title="Fertig, wir haben deinen Lunchletter konfiguriert. Sehr gerne würden wir dich auch mit
         Namen ansprechen:"
@@ -217,7 +318,7 @@ export default function Funnel() {
           </button>
         </FunnelStep>
       )}
-      {funnelStep === 7 && (
+      {funnelStep === 8 && (
         <FunnelStep
           title={`Cool ${userData.name}! Wir haben dir gerade eine Bestätigungsmail gesendet. Bitte bestätige den
         Link um ab sofort den Lunchletter zu erhalten.`}
@@ -230,7 +331,10 @@ export default function Funnel() {
       )}
       <div style={{ marginTop: "10px" }}>
         <ProgressBar
-          percent={((funnelStep + 1) * 100) / (TOTAL_FUNNEL_STEPS + 1)}
+          percent={
+            (Math.min(TOTAL_FUNNEL_STEPS, funnelStep + 1) * 100) /
+            (TOTAL_FUNNEL_STEPS + 1)
+          }
         />
       </div>
     </div>
