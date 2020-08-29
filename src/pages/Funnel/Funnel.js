@@ -4,30 +4,9 @@ import ProgressBar from "../../components/ProgressBar";
 import useUserCategories from "../../hooks/useUserCategories";
 import postUser from "../../services/backend/postUser";
 import useCanteens from "../../hooks/useCanteens";
+import { dayNames, mealTypes, prices } from "../../constants";
 
 import "./Funnel.css";
-
-const dayNames = [
-  "Montag",
-  "Dienstag",
-  "Mittwoch",
-  "Donnerstag",
-  "Freitag",
-  "Samstag",
-];
-
-const mealTypes = [
-  "Gerichte mit Fleisch",
-  "Gerichte mit Fisch",
-  "Vegetarische Gerichte",
-  "Vegane Gerichte",
-];
-
-const prices = {
-  students: "Preis für Studierende",
-  employees: "Preis für Beschäftigte der Universität",
-  other: "Preis für Nichtstudierende",
-};
 
 const TOTAL_FUNNEL_STEPS = 8;
 
@@ -112,7 +91,7 @@ export default function Funnel() {
     return <div>Hey</div>;
   }
   return (
-    <div>
+    <div className="sf-funnel">
       {funnelStep === 0 && (
         <FunnelStep title="Hey lass uns loslegen! Wie möchtest du dich anmelden?">
           <button onClick={nextStep}>
@@ -326,13 +305,27 @@ export default function Funnel() {
       )}
       {funnelStep === 99 && (
         <FunnelStep title="Flott zu deinem Lunchletter: Dann benötigen wir nur noch deine Mailadresse:">
-          <input type="text"></input>
+          <input
+            type="text"
+            value={userData.email}
+            onChange={(e) => {
+              updateUserData("email", e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              postUser(userData);
+              setFunnelStep(TOTAL_FUNNEL_STEPS);
+            }}
+          >
+            Weiter
+          </button>
         </FunnelStep>
       )}
       <div style={{ marginTop: "10px" }}>
         <ProgressBar
           percent={
-            (Math.min(TOTAL_FUNNEL_STEPS, funnelStep + 1) * 100) /
+            (Math.min(TOTAL_FUNNEL_STEPS + 1, funnelStep + 1) * 100) /
             (TOTAL_FUNNEL_STEPS + 1)
           }
         />

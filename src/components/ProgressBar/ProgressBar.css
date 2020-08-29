@@ -1,8 +1,6 @@
 .sf-progress-bar-wrapper {
-  height: 20px;
+  height: 60px;
   width: 100%;
-  border-radius: 13px;
-  background: #ffffff;
 }
 
 .sf-progress-bar {

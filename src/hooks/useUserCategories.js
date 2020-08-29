@@ -8,6 +8,10 @@ export default function useUserCategories() {
     const fetch = async () => {
       const uc = await getUserCategories();
       const _uc = {};
+      if (!uc) {
+        setUserCategories({});
+        return;
+      }
       for (let i = 0; i < uc.length; i++) {
         _uc[uc[i].name] = uc[i].id;
       }

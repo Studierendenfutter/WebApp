@@ -7,8 +7,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Confirm from "./pages/Confirm";
 import Settings from "./pages/Settings";
 import Cancel from "./pages/Cancel";
+import { hydrate, render } from "react-dom";
 
-ReactDOM.render(
+const App = () => (
   <React.StrictMode>
     <Router>
       <Switch>
@@ -26,10 +27,15 @@ ReactDOM.render(
         </Route>
       </Switch>
     </Router>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
+const rootElement = document.getElementById("root");
+if (rootElement.hasChildNodes()) {
+  hydrate(<App />, rootElement);
+} else {
+  render(<App />, rootElement);
+}
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
