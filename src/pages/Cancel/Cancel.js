@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import getUrlParameter from "../../services/utils/getUrlParameter";
+import deleteUser from "../../services/backend/deleteUser";
 
 export default function Cancel() {
-  //const uId = getUrlParameter("uId");
-  //const code = getUrlParameter("code");
+  const uId = getUrlParameter("uId");
+  const code = getUrlParameter("code");
 
   useEffect(() => {
-    console.log("Cancel here!");
+    deleteUser(uId, code);
   });
 
   return <div>Canceled</div>;

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import Funnel from "./pages/Funnel/Funnel";
@@ -8,6 +7,8 @@ import Confirm from "./pages/Confirm";
 import Settings from "./pages/Settings";
 import Cancel from "./pages/Cancel";
 import { hydrate, render } from "react-dom";
+import Canteens from "./pages/Canteens";
+import Meals from "./pages/Meals";
 
 const App = () => (
   <React.StrictMode>
@@ -24,6 +25,12 @@ const App = () => (
         </Route>
         <Route path="/funnel">
           <Funnel />
+        </Route>
+        <Route path="/canteens">
+          <Canteens />
+        </Route>
+        <Route path="/meals">
+          <Meals />
         </Route>
       </Switch>
     </Router>
