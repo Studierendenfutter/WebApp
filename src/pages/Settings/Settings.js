@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import useSettings from "../../hooks/useSettings";
 import getUrlParameter from "../../services/utils/getUrlParameter";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
@@ -34,6 +34,8 @@ export default function Settings() {
     uId,
     code
   );
+
+  console.log(userCanteens);
 
   const canteens = useCanteens({ city: "Münster" });
 
@@ -91,16 +93,9 @@ export default function Settings() {
   }
   return (
     <div>
-      <FunnelStep title="An welche Mail-Adresse sollen wir den Lunchletter schicken ?">
-        <input
-          type="text"
-          value={settings.email}
-          onChange={(e) => {
-            updateUserData("email", e.target.value);
-          }}
-        />
-      </FunnelStep>
-      <FunnelStep title={`An welchen Tagen möchtest du den Lunchletter haben?`}>
+      <FunnelStep
+        title={`An welchen Tagen möchtest du den Lunchletter erhalten?`}
+      >
         {dayNames.map((dayName, i) => (
           <div>
             <input
@@ -197,12 +192,12 @@ export default function Settings() {
                 userCategories[priceKey] === settings["user_category_id"]
               }
               onClick={() =>
-                updateUserData("userCategoryId", userCategories[priceKey])
+                updateUserData("user_category_id", userCategories[priceKey])
               }
             />
             <label
               onClick={() =>
-                updateUserData("userCategoryId", userCategories[priceKey])
+                updateUserData("user_category_id", userCategories[priceKey])
               }
             >
               {prices[priceKey]}
@@ -218,6 +213,7 @@ export default function Settings() {
           value={settings.name}
         />
       </FunnelStep>
+      <a href={"/cancel?uId=" + uId + "&code=" + code}>Abmelden</a>
     </div>
   );
 }

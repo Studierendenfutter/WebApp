@@ -15,7 +15,7 @@ const vegetarianIcon =
   "http://studierendenfutter.de/wp-content/uploads/2020/07/Icon-Vegetarian.png";
 
 function getIconLinkFromNotes(tag) {
-  if (tag === "vegetarisch") {
+  if (tag === "vegetarian") {
     return vegetarianIcon;
   }
 
@@ -23,7 +23,7 @@ function getIconLinkFromNotes(tag) {
     return veganIcon;
   }
 
-  if (tag === "fisch") {
+  if (tag === "fish") {
     return fishIcon;
   }
 
@@ -121,7 +121,7 @@ export default function Meals() {
                           <img
                             alt="Meal Icon"
                             style={{ width: "40px" }}
-                            src={getIconLinkFromNotes(meal.categories)}
+                            src={getIconLinkFromNotes(meal.type)}
                           />
                         </td>
                       </tr>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import getUserSettings from "../services/backend/getUserSettings";
+import putUserSettings from "../services/backend/putUserSettings";
 
 export default function useSettings(uId, code) {
   const [settings, setSettings] = useState({});
@@ -15,5 +16,14 @@ export default function useSettings(uId, code) {
     fetch();
   }, []); // eslint-disable-line
 
-  return [settings, setSettings, isLoading];
+  const updateSettings = (updatedSettings) => {
+    async function update() {
+      console.log(updatedSettings);
+      await putUserSettings({ userId: uId, code }, updatedSettings);
+    }
+    update();
+    setSettings(updatedSettings);
+  };
+
+  return [settings, updateSettings, isLoading];
 }

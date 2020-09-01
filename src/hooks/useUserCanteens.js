@@ -6,30 +6,32 @@ import deleteUserCanteens from "../services/backend/deleteUserCanteens";
 export default function useUserCanteens(userId, code) {
   const [userCanteens, setUserCanteens] = useState({});
 
-  useEffect(() => {
-    const fetch = async () => {
-      const uc = await getUserCanteens(userId, code);
-      const _uc = {};
-      if (!uc) {
-        setUserCanteens({});
-        return;
-      }
-      for (let ucI in uc) {
-        let canteen = uc[ucI];
-        _uc[canteen.canteen_id] = canteen;
-      }
-      setUserCanteens(_uc);
-    };
+  const fetch = async () => {
+    const uc = await getUserCanteens(userId, code);
+    const _uc = {};
+    if (!uc) {
+      setUserCanteens({});
+      return;
+    }
+    for (let ucI in uc) {
+      let canteen = uc[ucI];
+      _uc[canteen.canteen_id] = canteen;
+    }
+    setUserCanteens(_uc);
+  };
 
+  useEffect(() => {
     fetch();
   }, []); // eslint-disable-line
 
-  const addUserCanteen = (id) => {
-    postUserCanteen(id, { userId, code });
+  const addUserCanteen = async (id) => {
+    await postUserCanteen(id, { userId, code });
+    fetch();
   };
 
-  const removeUserCanteen = (id) => {
-    deleteUserCanteens([id], { userId, code });
+  const removeUserCanteen = async (id) => {
+    await deleteUserCanteens([id], { userId, code });
+    fetch();
   };
 
   return [userCanteens, addUserCanteen, removeUserCanteen];
