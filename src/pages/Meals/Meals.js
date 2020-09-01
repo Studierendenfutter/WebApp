@@ -14,20 +14,17 @@ const veganIcon =
 const vegetarianIcon =
   "http://studierendenfutter.de/wp-content/uploads/2020/07/Icon-Vegetarian.png";
 
-function getIconLinkFromNotes(notes) {
-  for (let i = 0; i < notes.length; i++) {
-    let tag = notes[i].toLowerCase();
-    if (tag === "vegetarisch") {
-      return vegetarianIcon;
-    }
+function getIconLinkFromNotes(tag) {
+  if (tag === "vegetarisch") {
+    return vegetarianIcon;
+  }
 
-    if (tag === "vegan") {
-      return veganIcon;
-    }
+  if (tag === "vegan") {
+    return veganIcon;
+  }
 
-    if (tag === "fisch") {
-      return fishIcon;
-    }
+  if (tag === "fisch") {
+    return fishIcon;
   }
 
   return cowIcon;
@@ -64,7 +61,7 @@ export default function Meals() {
       setMeals(await getUserMeals(uId, code));
     }
     fetch();
-  });
+  }, []); // eslint-disable-line
 
   return (
     <div

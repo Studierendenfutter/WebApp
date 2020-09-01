@@ -10,14 +10,16 @@ export default function Canteens() {
   const [meals, setMeals] = useState({});
 
   useEffect(() => {
-    async function fetchMeals(canteenId) {
-      const meals = await getCanteenMeals(canteenId, { date });
-      setMeals({ ...meals, [canteenId]: meals });
+    async function fetchMeals(canteens) {
+      const totalMeals = {};
+      for (let cId in canteens) {
+        const meals = await getCanteenMeals(canteens[cId].id, { date });
+        totalMeals[canteens[cId].id] = meals;
+      }
+      setMeals(totalMeals);
     }
     if (canteens) {
-      for (let cId in canteens) {
-        fetchMeals(canteens[cId].id);
-      }
+      fetchMeals(canteens);
     }
   }, [canteens, date]);
 
@@ -25,20 +27,23 @@ export default function Canteens() {
     <div>
       <div>
         {canteens &&
-          canteens.map((c) => (
-            <div>
-              <h2>{c.name}</h2>
-              {meals[c.id] && meals[c.id].length > 0 ? (
-                <div>
-                  {meals[c.id].map((m) => (
-                    <div>{m.name}</div>
-                  ))}
-                </div>
-              ) : (
-                <div>Heute keine Gerichte verfügbar</div>
-              )}
-            </div>
-          ))}
+          canteens.map((c) => {
+            const hasMeals = meals[c.id] && meals[c.id].length > 0;
+            return (
+              <div>
+                <h2 style={{ color: hasMeals ? "green" : "red" }}>{c.name}</h2>
+                {hasMeals ? (
+                  <div>
+                    {meals[c.id].map((m) => (
+                      <div>{m.name}</div>
+                    ))}
+                  </div>
+                ) : (
+                  <div>Heute keine Gerichte verfügbar</div>
+                )}
+              </div>
+            );
+          })}
       </div>
     </div>
   );
