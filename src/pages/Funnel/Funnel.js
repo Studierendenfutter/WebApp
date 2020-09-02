@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
 import ProgressBar from "../../components/ProgressBar";
+import Checkmark from "../../components/Checkmark";
 import useUserCategories from "../../hooks/useUserCategories";
 import postUser from "../../services/backend/postUser";
 import useCanteens from "../../hooks/useCanteens";
 import { dayNames, mealTypes, prices } from "../../constants";
 
 import "./Funnel.css";
+import RadioButton from "../../components/RadioButton";
 
 const TOTAL_FUNNEL_STEPS = 8;
 
@@ -85,25 +87,38 @@ export default function Funnel() {
     setUserData({ ...userData, canteens: _canteens });
   };
 
-  const nextStepButton = <button onClick={nextStep}>Weiter</button>;
+  const nextStepButton = (
+    <button className="sf-funnel-next-button" onClick={nextStep}>
+      Weiter
+    </button>
+  );
 
   if (!userCategories) {
-    return <div>Hey</div>;
+    return <div></div>;
   }
   return (
     <div className="sf-funnel">
       {funnelStep === 0 && (
         <FunnelStep title="Hey lass uns loslegen! Wie möchtest du dich anmelden?">
-          <button onClick={nextStep}>
-            In 7 Fragen schnell zum Individuellen Lunchletter
-          </button>
-          <button
-            onClick={() => {
-              setFunnelStep(99);
-            }}
-          >
-            Direkt anmelden ohne individuelle Einstellungen
-          </button>
+          <div>
+            <button
+              className="sf-funnel-big-button"
+              onClick={nextStep}
+              style={{ marginRight: "2em" }}
+            >
+              In 7 Fragen schnell zum <br />
+              Individuellen Lunchletter
+            </button>
+            <button
+              className="sf-funnel-big-button"
+              onClick={() => {
+                setFunnelStep(99);
+              }}
+            >
+              Direkt anmelden ohne <br />
+              individuelle Einstellungen
+            </button>
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 1 && (
@@ -114,6 +129,7 @@ export default function Funnel() {
             onChange={(e) => {
               updateUserData("email", e.target.value);
             }}
+            placeholder="ich.habe@hunger.de"
           />
           {nextStepButton}
         </FunnelStep>
@@ -122,71 +138,73 @@ export default function Funnel() {
         <FunnelStep
           title={`Perfekt du bekommst den Lunchletter an ${userData.email}! An welchen Tagen möchtest du den Lunchletter haben?`}
         >
-          {dayNames.map((dayName, i) => (
-            <div>
-              <input
-                type="checkbox"
-                key={dayName}
-                checked={userData.days[i]}
-                onClick={() => {
-                  toggleDay(i);
-                }}
-              />{" "}
-              <label
-                onClick={() => {
-                  toggleDay(i);
-                }}
-              >
-                {dayName}
-              </label>
-            </div>
-          ))}
+          <div>
+            {dayNames.map((dayName, i) => (
+              <div>
+                <Checkmark
+                  label={dayName}
+                  onClick={() => {
+                    console.log("toggle");
+                    toggleDay(i);
+                  }}
+                  inputProps={{
+                    type: "checkbox",
+                    key: dayName,
+                    checked: userData.days[i],
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           {nextStepButton}
         </FunnelStep>
       )}
       {funnelStep === 3 && (
         <FunnelStep title="Auch in den Semesterferien?">
-          <button
-            onClick={() => {
-              updateUserData("semesterBreaks", true);
-              nextStep();
-            }}
-          >
-            ja
-          </button>
-          <button
-            onClick={() => {
-              updateUserData("semesterBreaks", false);
-              nextStep();
-            }}
-          >
-            nein
-          </button>
+          <div>
+            <button
+              className="sf-funnel-big-button"
+              onClick={() => {
+                updateUserData("semesterBreaks", true);
+                nextStep();
+              }}
+              style={{ marginRight: "2em" }}
+            >
+              Ja
+            </button>
+            <button
+              className="sf-funnel-big-button"
+              onClick={() => {
+                updateUserData("semesterBreaks", false);
+                nextStep();
+              }}
+            >
+              Nein
+            </button>
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 4 && (
         <FunnelStep
           title={`Ist notiert. Welche Gerichte sollen wir in deinen persönlichen Lunchletter aufnehmen?`}
         >
-          {mealTypes.map((meal, i) => (
-            <div>
-              <input
-                type="checkbox"
-                key={meal}
-                checked={userData.meals[i]}
-                onClick={() => {
-                  toggleMeals(i);
-                }}
-              />{" "}
-              <label
-                onClick={() => {
-                  toggleMeals(i);
-                }}
-              >
-                {meal}
-              </label>
-            </div>
-          ))}
+          <div>
+            {mealTypes.map((meal, i) => (
+              <div>
+                <Checkmark
+                  label={meal}
+                  inputProps={{
+                    type: "checkbox",
+                    key: meal,
+                    checked: userData.meals[i],
+                  }}
+                  onClick={() => {
+                    toggleMeals(i);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           {nextStepButton}
         </FunnelStep>
       )}
@@ -195,54 +213,47 @@ export default function Funnel() {
           title="Wunderbar. Für welche Orte möchtest du das Mittagsangebot angezeigt bekommen?
             Du kannst dies auch noch genauer festlegen:"
         >
-          {Object.keys(canteensByType).map((type) => {
-            const typeIsChecked = canteensByType[type].reduce(
-              (t, c) => t || (userData.canteens && userData.canteens[c.id]),
-              false
-            );
-            return (
-              <div>
+          <div>
+            {Object.keys(canteensByType).map((type) => {
+              const typeIsChecked = canteensByType[type].reduce(
+                (t, c) => t || (userData.canteens && userData.canteens[c.id]),
+                false
+              );
+              return (
                 <div>
-                  <input
-                    type="checkbox"
-                    checked={typeIsChecked}
-                    onChange={(e) => setCanteensByType(type, e.target.checked)}
-                  />
-                  <label
-                    onClick={() => setCanteensByType(type, !typeIsChecked)}
-                  >
-                    {type}
-                  </label>
+                  <div>
+                    <Checkmark
+                      onClick={() => setCanteensByType(type, !typeIsChecked)}
+                      label={type}
+                      inputProps={{ type: "checkbox", checked: typeIsChecked }}
+                    />
+                  </div>
+                  <div className="sf-funnel-canteens-wrapper">
+                    {typeIsChecked &&
+                      canteensByType[type].map((canteen) => (
+                        <div>
+                          <Checkmark
+                            inputProps={{
+                              type: "checkbox",
+                              checked:
+                                userData.canteens &&
+                                userData.canteens[canteen.id],
+                            }}
+                            onClick={() =>
+                              updateCanteen(
+                                canteen.id,
+                                !userData.canteens[canteen.id]
+                              )
+                            }
+                            label={canteen.name}
+                          />
+                        </div>
+                      ))}
+                  </div>
                 </div>
-                <div className="sf-funnel-canteens-wrapper">
-                  {typeIsChecked &&
-                    canteensByType[type].map((canteen) => (
-                      <div>
-                        <input
-                          type="checkbox"
-                          checked={
-                            userData.canteens && userData.canteens[canteen.id]
-                          }
-                          onChange={(e) =>
-                            updateCanteen(canteen.id, e.target.checked)
-                          }
-                        />
-                        <label
-                          onClick={() =>
-                            updateCanteen(
-                              canteen.id,
-                              !userData.canteens[canteen.id]
-                            )
-                          }
-                        >
-                          {canteen.name}
-                        </label>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
           {nextStepButton}
         </FunnelStep>
       )}
@@ -251,25 +262,24 @@ export default function Funnel() {
           title="Super, wir haben es fast geschafft. Jetzt müssen wir nur noch wissen, welchen Preis wir
         dir für die Mittagsgerichte anzeigen sollen:"
         >
-          {Object.keys(prices).map((priceKey) => (
-            <div>
-              <input
-                type="radio"
-                key={priceKey}
-                checked={userCategories[priceKey] === userData.userCategoryId}
-                onClick={() =>
-                  updateUserData("userCategoryId", userCategories[priceKey])
-                }
-              />
-              <label
-                onClick={() =>
-                  updateUserData("userCategoryId", userCategories[priceKey])
-                }
-              >
-                {prices[priceKey]}
-              </label>
-            </div>
-          ))}
+          <div>
+            {Object.keys(prices).map((priceKey) => (
+              <div>
+                <RadioButton
+                  inputProps={{
+                    type: "radio",
+                    key: priceKey,
+                    checked:
+                      userCategories[priceKey] === userData.userCategoryId,
+                  }}
+                  onClick={() =>
+                    updateUserData("userCategoryId", userCategories[priceKey])
+                  }
+                  label={prices[priceKey]}
+                />
+              </div>
+            ))}
+          </div>
           {nextStepButton}
         </FunnelStep>
       )}
@@ -292,6 +302,7 @@ export default function Funnel() {
               postUser(userData);
               nextStep();
             }}
+            className="sf-funnel-next-button"
           >
             Weiter
           </button>

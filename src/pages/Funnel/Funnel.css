@@ -4,3 +4,34 @@
 .sf-funnel-canteens-wrapper {
   margin-left: 20px;
 }
+
+.sf-funnel-big-button {
+  background: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+}
+
+.sf-funnel-next-button {
+  margin: 1em;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.sf-funnel-next-button:hover,
+.sf-funnel-big-button:hover {
+  cursor: pointer;
+}
+
+.sf-funnel input {
+  border: none;
+  border-bottom: 1px solid gray;
+  padding: 0.5em;
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+}

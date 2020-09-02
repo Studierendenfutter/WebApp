@@ -120,7 +120,7 @@ export default function Meals() {
                           <p>{formatPrice(meal.price)} €</p>
                           <img
                             alt="Meal Icon"
-                            style={{ width: "40px" }}
+                            style={{ width: "20px" }}
                             src={getIconLinkFromNotes(meal.type)}
                           />
                         </td>
@@ -143,7 +143,7 @@ export default function Meals() {
           <table class="sf-email-legend-points" style={{ padding: "20px" }}>
             <tr>
               <td align="center" valign="middle" height="50">
-                <img alt="cow" style={{ width: "40px" }} src={cowIcon} />
+                <img alt="cow" style={{ width: "20px" }} src={cowIcon} />
               </td>
               <td
                 align="left"
@@ -156,7 +156,7 @@ export default function Meals() {
             </tr>
             <tr>
               <td align="center" valign="middle" height="50">
-                <img style={{ width: "40px" }} src={fishIcon} alt="fish" />
+                <img style={{ width: "20px" }} src={fishIcon} alt="fish" />
               </td>
               <td
                 align="left"
@@ -169,7 +169,7 @@ export default function Meals() {
             </tr>
             <tr>
               <td align="center" valign="middle" height="50">
-                <img style={{ width: "40px" }} src={vegetarianIcon} />
+                <img style={{ width: "20px" }} src={vegetarianIcon} />
               </td>
               <td
                 align="left"
@@ -182,7 +182,7 @@ export default function Meals() {
             </tr>
             <tr>
               <td align="center" valign="middle" height="50">
-                <img style={{ width: "40px" }} src={veganIcon} />
+                <img style={{ width: "20px" }} src={veganIcon} />
               </td>
               <td
                 align="left"

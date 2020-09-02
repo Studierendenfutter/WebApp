@@ -25,12 +25,18 @@ export default function useUserCanteens(userId, code) {
   }, []); // eslint-disable-line
 
   const addUserCanteen = async (id) => {
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
     await postUserCanteen(id, { userId, code });
     fetch();
   };
 
   const removeUserCanteen = async (id) => {
-    await deleteUserCanteens([id], { userId, code });
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
+    await deleteUserCanteens(id, { userId, code });
     fetch();
   };
 
