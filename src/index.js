@@ -9,6 +9,7 @@ import Cancel from "./pages/Cancel";
 import { hydrate, render } from "react-dom";
 import Canteens from "./pages/Canteens";
 import Meals from "./pages/Meals";
+import Share from "./pages/Share/Share";
 
 const App = () => (
   <React.StrictMode>
@@ -31,6 +32,9 @@ const App = () => (
         </Route>
         <Route path="/meals">
           <Meals />
+        </Route>
+        <Route path="/share">
+          <Share />
         </Route>
       </Switch>
     </Router>
