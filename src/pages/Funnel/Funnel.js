@@ -57,6 +57,10 @@ export default function Funnel() {
     setFunnelStep(funnelStep + 1);
   };
 
+  const lastStep = () => {
+    setFunnelStep(funnelStep - 1);
+  };
+
   const updateUserData = (name, value) => {
     setUserData({ ...userData, [name]: value });
   };
@@ -90,6 +94,12 @@ export default function Funnel() {
   const nextStepButton = (
     <button className="sf-funnel-next-button" onClick={nextStep}>
       Weiter
+    </button>
+  );
+
+  const lastStepButton = (
+    <button className="sf-funnel-next-button" onClick={lastStep}>
+      Zurück
     </button>
   );
 
@@ -131,6 +141,7 @@ export default function Funnel() {
             }}
             placeholder="ich.habe@hunger.de"
           />
+
           {nextStepButton}
         </FunnelStep>
       )}
@@ -156,7 +167,12 @@ export default function Funnel() {
               </div>
             ))}
           </div>
-          {nextStepButton}
+
+          <div>
+            {lastStepButton}
+
+            {nextStepButton}
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 3 && (
@@ -182,6 +198,7 @@ export default function Funnel() {
               Nein
             </button>
           </div>
+          {lastStepButton}
         </FunnelStep>
       )}
       {funnelStep === 4 && (
@@ -205,7 +222,11 @@ export default function Funnel() {
               </div>
             ))}
           </div>
-          {nextStepButton}
+          <div>
+            {lastStepButton}
+
+            {nextStepButton}
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 5 && (
@@ -254,7 +275,11 @@ export default function Funnel() {
               );
             })}
           </div>
-          {nextStepButton}
+          <div>
+            {lastStepButton}
+
+            {nextStepButton}
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 6 && (
@@ -280,7 +305,10 @@ export default function Funnel() {
               </div>
             ))}
           </div>
-          {nextStepButton}
+          <div>
+            {lastStepButton}
+            {nextStepButton}
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 7 && (
@@ -297,15 +325,18 @@ export default function Funnel() {
             Wir verwenden deinen Namen ausschließlich für die Personalisierung
             deiner Mails.
           </label>
-          <button
-            onClick={() => {
-              postUser(userData);
-              nextStep();
-            }}
-            className="sf-funnel-next-button"
-          >
-            Weiter
-          </button>
+          <div>
+            {lastStepButton}
+            <button
+              onClick={() => {
+                postUser(userData);
+                nextStep();
+              }}
+              className="sf-funnel-next-button"
+            >
+              Weiter
+            </button>
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 8 && (

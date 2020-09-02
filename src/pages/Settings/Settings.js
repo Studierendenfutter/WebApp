@@ -142,10 +142,9 @@ export default function Settings() {
       <FunnelStep title="Für welche Orte möchtest du das Mittagsangebot angezeigt bekommen?">
         <div>
           {Object.keys(canteensByType).map((type) => {
-            const typeIsChecked = canteensByType[type].reduce(
-              (t, c) => t || (userCanteens && userCanteens[c.id]),
-              false
-            );
+            const typeIsChecked = canteensByType[type].reduce((t, c) => {
+              return t || (userCanteens && !!userCanteens[c.id]);
+            }, false);
             return (
               <div>
                 <div>
