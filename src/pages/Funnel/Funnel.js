@@ -25,6 +25,7 @@ export default function Funnel() {
   });
 
   const canteens = useCanteens({ city: userData.city });
+  const [emailValid, setEmailValid] = useState(true);
 
   useEffect(() => {
     if (!userData.canteens && canteens) {
@@ -35,6 +36,11 @@ export default function Funnel() {
       setUserData({ ...userData, canteens: cs });
     }
   }, [canteens, setUserData]); // eslint-disable-line
+
+  const checkEmail = () => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(userData.email).toLowerCase());
+  };
 
   const canteensByType = useMemo(() => {
     if (!canteens) return {};
@@ -141,8 +147,20 @@ export default function Funnel() {
             }}
             placeholder="ich.habe@hunger.de"
           />
-
-          {nextStepButton}
+          {!emailValid && <label>Bitte gib eine echte Emailadresse ein.</label>}
+          {
+            <button
+              className="sf-funnel-next-button"
+              onClick={() => {
+                if (checkEmail()) {
+                  nextStep();
+                  setEmailValid(true);
+                } else setEmailValid(false);
+              }}
+            >
+              Weiter
+            </button>
+          }
         </FunnelStep>
       )}
       {funnelStep === 2 && (
