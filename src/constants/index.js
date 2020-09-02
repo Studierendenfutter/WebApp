@@ -19,3 +19,9 @@ export const prices = {
   employees: "Preis für Beschäftigte der Universität",
   other: "Preis für Nichtstudierende",
 };
+
+export const localNames = {
+  canteen: "Mensen",
+  other: "Andere",
+  bistro: "Bistros",
+};

@@ -5,7 +5,7 @@ import Checkmark from "../../components/Checkmark";
 import useUserCategories from "../../hooks/useUserCategories";
 import postUser from "../../services/backend/postUser";
 import useCanteens from "../../hooks/useCanteens";
-import { dayNames, mealTypes, prices } from "../../constants";
+import { dayNames, mealTypes, prices, localNames } from "../../constants";
 
 import "./Funnel.css";
 import RadioButton from "../../components/RadioButton";
@@ -224,7 +224,7 @@ export default function Funnel() {
                   <div>
                     <Checkmark
                       onClick={() => setCanteensByType(type, !typeIsChecked)}
-                      label={type}
+                      label={localNames[type]}
                       inputProps={{ type: "checkbox", checked: typeIsChecked }}
                     />
                   </div>

@@ -2,10 +2,14 @@ import React, { useMemo } from "react";
 import useSettings from "../../hooks/useSettings";
 import getUrlParameter from "../../services/utils/getUrlParameter";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
-import { dayNames, mealTypes, prices } from "../../constants";
+import { dayNames, mealTypes, prices, localNames } from "../../constants";
 import useUserCanteens from "../../hooks/useUserCanteens";
 import useCanteens from "../../hooks/useCanteens";
 import useUserCategories from "../../hooks/useUserCategories";
+import Checkmark from "../../components/Checkmark";
+import RadioButton from "../../components/RadioButton";
+
+import "./Settings.css";
 
 const dayEnums = [
   "mondays",
@@ -27,7 +31,6 @@ export default function Settings() {
   const uId = getUrlParameter("uId");
   const code = getUrlParameter("code");
   const [settings, setSettings, isLoadingSettings] = useSettings(uId, code);
-  //const [user, setUser] = useUser(uId, code);
 
   //load canteens in use or not in use
   const [userCanteens, addUserCanteen, removeUserCanteen] = useUserCanteens(
@@ -92,118 +95,107 @@ export default function Settings() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="sf-settings">
       <FunnelStep
         title={`An welchen Tagen möchtest du den Lunchletter erhalten?`}
       >
-        {dayNames.map((dayName, i) => (
-          <div>
-            <input
-              type="checkbox"
-              key={dayName}
-              checked={days[i]}
-              onClick={() => {
-                toggleDay(i);
-              }}
-            />{" "}
-            <label
-              onClick={() => {
-                toggleDay(i);
-              }}
-            >
-              {dayName}
-            </label>
-          </div>
-        ))}
+        <div>
+          {dayNames.map((dayName, i) => (
+            <div>
+              <Checkmark
+                label={dayName}
+                onClick={() => {
+                  console.log("toggle");
+                  toggleDay(i);
+                }}
+                inputProps={{
+                  type: "checkbox",
+                  key: dayName,
+                  checked: days[i],
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </FunnelStep>
       <FunnelStep
         title={`Welche Gerichte sollen wir in deinen persönlichen Lunchletter aufnehmen?`}
       >
-        {mealTypes.map((meal, i) => (
-          <div>
-            <input
-              type="checkbox"
-              key={meal}
-              checked={settings[mealEnums[i]]}
-              onClick={() => {
-                toggleMeals(i);
-              }}
-            />{" "}
-            <label
-              onClick={() => {
-                toggleMeals(i);
-              }}
-            >
-              {meal}
-            </label>
-          </div>
-        ))}
+        <div>
+          {mealTypes.map((meal, i) => (
+            <div>
+              <Checkmark
+                label={meal}
+                inputProps={{
+                  type: "checkbox",
+                  key: meal,
+                  checked: settings[mealEnums[i]],
+                }}
+                onClick={() => {
+                  toggleMeals(i);
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </FunnelStep>
       <FunnelStep title="Für welche Orte möchtest du das Mittagsangebot angezeigt bekommen?">
-        {Object.keys(canteensByType).map((type) => {
-          const typeIsChecked = canteensByType[type].reduce(
-            (t, c) => t || (userCanteens && userCanteens[c.id]),
-            false
-          );
-          return (
-            <div>
+        <div>
+          {Object.keys(canteensByType).map((type) => {
+            const typeIsChecked = canteensByType[type].reduce(
+              (t, c) => t || (userCanteens && userCanteens[c.id]),
+              false
+            );
+            return (
               <div>
-                <input
-                  type="checkbox"
-                  checked={typeIsChecked}
-                  onChange={(e) => setCanteensByType(type, e.target.checked)}
-                />
-                <label onClick={() => setCanteensByType(type, !typeIsChecked)}>
-                  {type}
-                </label>
+                <div>
+                  <Checkmark
+                    onClick={() => setCanteensByType(type, !typeIsChecked)}
+                    label={localNames[type]}
+                    inputProps={{ type: "checkbox", checked: typeIsChecked }}
+                  />
+                </div>
+                <div className="sf-funnel-canteens-wrapper">
+                  {typeIsChecked &&
+                    canteensByType[type].map((canteen) => (
+                      <div>
+                        <Checkmark
+                          inputProps={{
+                            type: "checkbox",
+                            checked: userCanteens && !!userCanteens[canteen.id],
+                          }}
+                          onClick={() =>
+                            updateCanteen(canteen.id, !userCanteens[canteen.id])
+                          }
+                          label={canteen.name}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
-              <div className="sf-funnel-canteens-wrapper">
-                {typeIsChecked &&
-                  canteensByType[type].map((canteen) => (
-                    <div>
-                      <input
-                        type="checkbox"
-                        checked={userCanteens && !!userCanteens[canteen.id]}
-                        onChange={(e) =>
-                          updateCanteen(canteen.id, e.target.checked)
-                        }
-                      />
-                      <label
-                        onClick={() =>
-                          updateCanteen(canteen.id, !userCanteens[canteen.id])
-                        }
-                      >
-                        {canteen.name}
-                      </label>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </FunnelStep>
       <FunnelStep title="Welchen Preis sollen wir dir für die Mittagsgerichte anzeigen?">
-        {Object.keys(prices).map((priceKey) => (
-          <div>
-            <input
-              type="radio"
-              key={priceKey}
-              checked={
-                userCategories[priceKey] === settings["user_category_id"]
-              }
-              onClick={() =>
-                updateUserData("user_category_id", userCategories[priceKey])
-              }
-            />
-            <label
-              onClick={() =>
-                updateUserData("user_category_id", userCategories[priceKey])
-              }
-            >
-              {prices[priceKey]}
-            </label>
-          </div>
-        ))}
+        <div>
+          {Object.keys(prices).map((priceKey) => (
+            <div>
+              <RadioButton
+                inputProps={{
+                  type: "radio",
+                  key: priceKey,
+                  checked:
+                    userCategories[priceKey] === settings["user_category_id"],
+                }}
+                onClick={() =>
+                  updateUserData("userCategoryId", userCategories[priceKey])
+                }
+                label={prices[priceKey]}
+              />
+            </div>
+          ))}
+        </div>
       </FunnelStep>
       <FunnelStep title="Dein Name:">
         <input
@@ -213,7 +205,15 @@ export default function Settings() {
           value={settings.name}
         />
       </FunnelStep>
-      <a href={"/cancel?uId=" + uId + "&code=" + code}>Abmelden</a>
+      <div className="sf-settings-buttons">
+        <button className="sf-settings-button">Speichern</button>
+        <a
+          className="sf-settings-cancel-link"
+          href={"/cancel?uId=" + uId + "&code=" + code}
+        >
+          Abmelden
+        </a>
+      </div>
     </div>
   );
 }
