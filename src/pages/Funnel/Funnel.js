@@ -373,6 +373,7 @@ export default function Funnel() {
             }}
           />
           <button
+            className="sf-funnel-next-button"
             onClick={() => {
               postUser(userData);
               setFunnelStep(TOTAL_FUNNEL_STEPS);

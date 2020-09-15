@@ -46,7 +46,8 @@ import {
 export default function Share() {
   const shareData = {
     title: "Studierendenfutter",
-    text: "Erhalte täglich deinen Lunchletter!",
+    text:
+      "Hey, mit dem Lunchletter von Studierendenfutter bekomme ich jeden Tag mein persönliches Mittagsmenü zugeschickt. Wenn du dich auch anmelden möchtest, kannst du das hier tun:",
     url: "https://www.studierendenfutter.de",
   };
 
@@ -65,29 +66,29 @@ export default function Share() {
       <div>
         <div>
           <WhatsappShareButton {...shareData}>
-            <WhatsappIcon size={128} round={true} />
+            <WhatsappIcon size={120} round={true} />
           </WhatsappShareButton>
           <TelegramShareButton {...shareData}>
-            <TelegramIcon size={128} round={true} />
+            <TelegramIcon size={120} round={true} />
           </TelegramShareButton>
           <FacebookShareButton {...shareData}>
-            <FacebookIcon size={128} round={true} />
+            <FacebookIcon size={120} round={true} />
           </FacebookShareButton>
         </div>
         <div>
           <RedditShareButton {...shareData}>
-            <RedditIcon size={128} round={true} />
+            <RedditIcon size={120} round={true} />
           </RedditShareButton>
           <LinkedinShareButton {...shareData}>
-            <LinkedinIcon size={128} round={true} />
+            <LinkedinIcon size={120} round={true} />
           </LinkedinShareButton>
           <TwitterShareButton {...shareData}>
-            <TwitterIcon size={128} round={true} />
+            <TwitterIcon size={120} round={true} />
           </TwitterShareButton>
         </div>
         <div>
           <EmailShareButton {...shareData}>
-            <EmailIcon size={128} round={true} />
+            <EmailIcon size={120} round={true} />
           </EmailShareButton>
         </div>
       </div>
