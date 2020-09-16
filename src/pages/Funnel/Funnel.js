@@ -148,19 +148,22 @@ export default function Funnel() {
             placeholder="ich.habe@hunger.de"
           />
           {!emailValid && <label>Bitte gib eine echte Emailadresse ein.</label>}
-          {
-            <button
-              className="sf-funnel-next-button"
-              onClick={() => {
-                if (checkEmail()) {
-                  nextStep();
-                  setEmailValid(true);
-                } else setEmailValid(false);
-              }}
-            >
-              Weiter
-            </button>
-          }
+          <div>
+            {lastStepButton}
+            {
+              <button
+                className="sf-funnel-next-button"
+                onClick={() => {
+                  if (checkEmail()) {
+                    nextStep();
+                    setEmailValid(true);
+                  } else setEmailValid(false);
+                }}
+              >
+                Weiter
+              </button>
+            }
+          </div>
         </FunnelStep>
       )}
       {funnelStep === 2 && (
@@ -372,15 +375,25 @@ export default function Funnel() {
               updateUserData("email", e.target.value);
             }}
           />
-          <button
-            className="sf-funnel-next-button"
-            onClick={() => {
-              postUser(userData);
-              setFunnelStep(TOTAL_FUNNEL_STEPS);
-            }}
-          >
-            Weiter
-          </button>
+          <div>
+            <button
+              className="sf-funnel-next-button"
+              onClick={() => {
+                setFunnelStep(0);
+              }}
+            >
+              Zurück
+            </button>
+            <button
+              className="sf-funnel-next-button"
+              onClick={() => {
+                postUser(userData);
+                setFunnelStep(TOTAL_FUNNEL_STEPS);
+              }}
+            >
+              Weiter
+            </button>
+          </div>
         </FunnelStep>
       )}
       <div style={{ marginTop: "10px" }}>

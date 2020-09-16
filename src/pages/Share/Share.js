@@ -66,29 +66,29 @@ export default function Share() {
       <div>
         <div>
           <WhatsappShareButton {...shareData}>
-            <WhatsappIcon size={120} round={true} />
+            <WhatsappIcon size={115} round={true} />
           </WhatsappShareButton>
           <TelegramShareButton {...shareData}>
-            <TelegramIcon size={120} round={true} />
+            <TelegramIcon size={115} round={true} />
           </TelegramShareButton>
           <FacebookShareButton {...shareData}>
-            <FacebookIcon size={120} round={true} />
+            <FacebookIcon size={115} round={true} />
           </FacebookShareButton>
         </div>
         <div>
           <RedditShareButton {...shareData}>
-            <RedditIcon size={120} round={true} />
+            <RedditIcon size={115} round={true} />
           </RedditShareButton>
           <LinkedinShareButton {...shareData}>
-            <LinkedinIcon size={120} round={true} />
+            <LinkedinIcon size={115} round={true} />
           </LinkedinShareButton>
           <TwitterShareButton {...shareData}>
-            <TwitterIcon size={120} round={true} />
+            <TwitterIcon size={115} round={true} />
           </TwitterShareButton>
         </div>
         <div>
           <EmailShareButton {...shareData}>
-            <EmailIcon size={120} round={true} />
+            <EmailIcon size={115} round={true} />
           </EmailShareButton>
         </div>
       </div>
