@@ -6,11 +6,12 @@
 }
 
 .sf-funnel-big-button {
-  background: white;
+  max-width: 400px;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 1.2rem;
+  background: white;
 }
 
 .sf-funnel-next-button {
@@ -34,4 +35,25 @@
   padding: 0.5em;
   font-size: 1.2rem;
   margin-bottom: 0.5em;
+}
+
+.sf-funnel-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sf-funnel-button-group > .sf-funnel-big-button:first-of-type {
+  margin-right: 2em;
+}
+
+@media (max-width: 600px) {
+  .sf-funnel-button-group {
+    flex-direction: column;
+  }
+
+  .sf-funnel-button-group > .sf-funnel-big-button:first-of-type {
+    margin: 0;
+    margin-bottom: 1em;
+  }
 }

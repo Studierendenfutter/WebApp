@@ -116,12 +116,8 @@ export default function Funnel() {
     <div className="sf-funnel">
       {funnelStep === 0 && (
         <FunnelStep title="Hey lass uns loslegen! Wie möchtest du dich anmelden?">
-          <div>
-            <button
-              className="sf-funnel-big-button"
-              onClick={nextStep}
-              style={{ marginRight: "2em" }}
-            >
+          <div className="sf-funnel-button-group">
+            <button className="sf-funnel-big-button" onClick={nextStep}>
               In 7 Fragen schnell zum <br />
               Individuellen Lunchletter
             </button>
