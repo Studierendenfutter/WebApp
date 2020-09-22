@@ -196,6 +196,30 @@ export default function Settings() {
           ))}
         </div>
       </FunnelStep>
+      <FunnelStep title="Willst du in den Semesterferien den Lunchletter erhalten?">
+        <div>
+          <div>
+            <RadioButton
+              inputProps={{
+                type: "radio",
+                key: "ja",
+                checked: settings["semester_breaks"],
+              }}
+              onClick={() => updateUserData("semester_breaks", true)}
+              label="Ja"
+            />
+            <RadioButton
+              inputProps={{
+                type: "radio",
+                key: "nein",
+                checked: !settings["semester_breaks"],
+              }}
+              onClick={() => updateUserData("semester_breaks", false)}
+              label="Nein"
+            />
+          </div>
+        </div>
+      </FunnelStep>
       <FunnelStep title="Dein Name:">
         <input
           type="text"

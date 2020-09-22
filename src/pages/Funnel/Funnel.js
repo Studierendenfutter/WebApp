@@ -26,6 +26,8 @@ export default function Funnel() {
 
   const canteens = useCanteens({ city: userData.city });
   const [emailValid, setEmailValid] = useState(true);
+  const [agbValid, setAgbValid] = useState(true);
+  const [canteensValid, setCanteensValid] = useState(true);
 
   useEffect(() => {
     if (!userData.canteens && canteens) {
@@ -40,6 +42,10 @@ export default function Funnel() {
   const checkEmail = () => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(userData.email).toLowerCase());
+  };
+
+  const checkCanteens = () => {
+    return Object.values(userData.canteens).filter((c) => c).length !== 0;
   };
 
   const canteensByType = useMemo(() => {
@@ -58,6 +64,8 @@ export default function Funnel() {
   const userCategories = useUserCategories();
 
   const [funnelStep, setFunnelStep] = useState(0);
+
+  const [agbAccepted, setAgbAccepted] = useState(false);
 
   const nextStep = () => {
     setFunnelStep(funnelStep + 1);
@@ -143,7 +151,36 @@ export default function Funnel() {
             }}
             placeholder="ich.habe@hunger.de"
           />
-          {!emailValid && <label>Bitte gib eine echte Emailadresse ein.</label>}
+          {!emailValid && (
+            <label>Bitte gib eine echte E-Mail-Adresse ein.</label>
+          )}
+          <div style={{ padding: "20px" }}>
+            <Checkmark
+              inputProps={{ type: "checkbox", checked: agbAccepted }}
+              label={
+                <span style={{ fontSize: "16px" }}>
+                  Ich bin damit einverstanden, den Lunchletter per Mail zu
+                  erhalten und stimme dafür der Verarbeitung meiner
+                  personenbezogenen Daten gemäß der{" "}
+                  <a
+                    href="https://studierendenfutter.de/datenschutzerklaerung"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Datenschutzerklärung
+                  </a>{" "}
+                  zu.
+                </span>
+              }
+              onClick={(e) => setAgbAccepted(e.target.checked)}
+            />
+            {!agbValid && (
+              <label>
+                Wir können dich nur zum Lunchletter anmelden, wenn du der
+                Verarbeitung deiner Daten zustimmst.
+              </label>
+            )}
+          </div>
           <div>
             {lastStepButton}
             {
@@ -151,8 +188,11 @@ export default function Funnel() {
                 className="sf-funnel-next-button"
                 onClick={() => {
                   if (checkEmail()) {
-                    nextStep();
-                    setEmailValid(true);
+                    if (agbAccepted) {
+                      nextStep();
+                      setEmailValid(true);
+                      setAgbValid(true);
+                    } else setAgbValid(false);
                   } else setEmailValid(false);
                 }}
               >
@@ -292,10 +332,23 @@ export default function Funnel() {
               );
             })}
           </div>
+          {!canteensValid && (
+            <label>Bitte wähle mindestens ein Lokal aus.</label>
+          )}
           <div>
             {lastStepButton}
 
-            {nextStepButton}
+            <button
+              className="sf-funnel-next-button"
+              onClick={() => {
+                if (checkCanteens()) {
+                  nextStep();
+                  setCanteensValid(true);
+                } else setCanteensValid(false);
+              }}
+            >
+              Weiter
+            </button>
           </div>
         </FunnelStep>
       )}
@@ -370,7 +423,38 @@ export default function Funnel() {
             onChange={(e) => {
               updateUserData("email", e.target.value);
             }}
+            placeholder="ich.habe@hunger.de"
           />
+          {!emailValid && (
+            <label>Bitte gib eine echte E-Mail-Adresse ein.</label>
+          )}
+          <div style={{ padding: "20px" }}>
+            <Checkmark
+              inputProps={{ type: "checkbox", checked: agbAccepted }}
+              label={
+                <span style={{ fontSize: "16px" }}>
+                  Ich bin damit einverstanden, den Lunchletter per Mail zu
+                  erhalten und stimme dafür der Verarbeitung meiner
+                  personenbezogenen Daten gemäß der{" "}
+                  <a
+                    href="https://studierendenfutter.de/datenschutzerklaerung"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Datenschutzerklärung
+                  </a>{" "}
+                  zu.
+                </span>
+              }
+              onClick={(e) => setAgbAccepted(e.target.checked)}
+            />
+            {!agbValid && (
+              <label>
+                Wir können dich nur zum Lunchletter anmelden, wenn du der
+                Verarbeitung deiner Daten zustimmst.
+              </label>
+            )}
+          </div>
           <div>
             <button
               className="sf-funnel-next-button"
@@ -383,8 +467,14 @@ export default function Funnel() {
             <button
               className="sf-funnel-next-button"
               onClick={() => {
-                postUser(userData);
-                setFunnelStep(TOTAL_FUNNEL_STEPS);
+                if (checkEmail()) {
+                  if (agbAccepted) {
+                    postUser(userData);
+                    setFunnelStep(TOTAL_FUNNEL_STEPS);
+                    setEmailValid(true);
+                    setAgbValid(true);
+                  } else setAgbValid(false);
+                } else setEmailValid(false);
               }}
             >
               Weiter
