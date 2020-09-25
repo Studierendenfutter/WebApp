@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import useSettings from "../../hooks/useSettings";
 import getUrlParameter from "../../services/utils/getUrlParameter";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
@@ -10,6 +10,7 @@ import Checkmark from "../../components/Checkmark";
 import RadioButton from "../../components/RadioButton";
 
 import "./Settings.css";
+import Loader from "../../components/Loader";
 
 const dayEnums = [
   "mondays",
@@ -37,8 +38,6 @@ export default function Settings() {
     uId,
     code
   );
-
-  console.log(userCanteens);
 
   const canteens = useCanteens({ city: "Münster" });
 
@@ -89,6 +88,13 @@ export default function Settings() {
 
   const toggleMeals = (i) => {
     setSettings({ ...settings, [mealEnums[i]]: !settings[mealEnums[i]] });
+  };
+
+  const [save, setSave] = useState(false);
+
+  const saveUserDate = () => {
+    setSave(true);
+    setTimeout(() => setSave(false), 5000);
   };
 
   if (isLoadingSettings) {
@@ -188,7 +194,7 @@ export default function Settings() {
                     userCategories[priceKey] === settings["user_category_id"],
                 }}
                 onClick={() =>
-                  updateUserData("userCategoryId", userCategories[priceKey])
+                  updateUserData("user_category_id", userCategories[priceKey])
                 }
                 label={prices[priceKey]}
               />
@@ -228,11 +234,20 @@ export default function Settings() {
           value={settings.name}
         />
       </FunnelStep>
+      {save && (
+        <div style={{ textAlign: "center", color: "var(--primary-color)" }}>
+          <label>Deine Einstellungen wurden gespeichert.</label>
+        </div>
+      )}
       <div className="sf-settings-buttons">
-        <button className="sf-settings-button">Speichern</button>
+        <button className="sf-settings-button" onClick={saveUserDate}>
+          Speichern
+        </button>
         <a
           className="sf-settings-cancel-link"
-          href={"/cancel?uId=" + uId + "&code=" + code}
+          href={
+            "https://studierendenfutter.de/cancel?uId=" + uId + "&code=" + code
+          }
         >
           Abmelden
         </a>

@@ -10,6 +10,7 @@ import { hydrate, render } from "react-dom";
 import Canteens from "./pages/Canteens";
 import Meals from "./pages/Meals";
 import Share from "./pages/Share/Share";
+import Stats from "./pages/Stats/Stats";
 
 const App = () => (
   <React.StrictMode>
@@ -35,6 +36,9 @@ const App = () => (
         </Route>
         <Route path="/share">
           <Share />
+        </Route>
+        <Route path="/stats">
+          <Stats />
         </Route>
       </Switch>
     </Router>
