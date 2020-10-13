@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AdminLogin from "../../components/AdminLogin";
 import fetchStatistics from "../../services/backend/fetchStatistics";
-import RTChart from "react-rt-chart";
 
 import "./Stats.css";
-
-const useForceUpdate = () => useState()[1];
 
 export default function Stats() {
   const [, setPassword] = useState();
@@ -15,10 +12,6 @@ export default function Stats() {
     const stats = await fetchStatistics(password);
     setData(stats);
   };
-
-  useEffect(() => {
-    setInterval(useForceUpdate, 1000);
-  });
 
   if (!data) {
     return (
