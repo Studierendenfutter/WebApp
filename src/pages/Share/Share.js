@@ -29,7 +29,7 @@ export default function Share() {
     text:
       "Hey, mit dem Lunchletter von Studierendenfutter bekomme ich jeden Tag mein persönliches Mittagsmenü zugeschickt. Wenn du dich auch anmelden möchtest, kannst du das hier tun:",
     url: "https://www.studierendenfutter.de",
-    style: { margin: "1em" },
+    style: { margin: "1em", },
   };
 
   useEffect(() => {
