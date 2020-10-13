@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AdminLogin from "../../components/AdminLogin";
 import fetchStatistics from "../../services/backend/fetchStatistics";
+import Chart from "react-apexcharts";
+import getDateString from "../../services/utils/getDateString";
 
 import "./Stats.css";
 
@@ -60,6 +62,60 @@ export default function Stats() {
           </span>
           <span>% opened today</span>
         </div>
+      </div>
+      <div>
+        <h2 className="sf-stats-heading">Emails</h2>
+        <Chart
+          options={{
+            chart: {
+              id: "sf-email-chart",
+            },
+            xaxis: {
+              categories: data
+                ? data.emailsSendDaily.map((eod) =>
+                    getDateString(new Date(eod.date))
+                  )
+                : [],
+            },
+          }}
+          series={[
+            {
+              name: "emails send",
+              data: data ? data.emailsOpenedDaily.map((eod) => eod.count) : [],
+            },
+            {
+              name: "emails opened",
+              data: data ? data.emailsSendDaily.map((eod) => eod.count) : [],
+            },
+          ]}
+          type="line"
+          width={"100%"}
+          height={320}
+        />
+      </div>
+      <div>
+        <h2 className="sf-stats-heading">Users</h2>
+        <Chart
+          options={{
+            chart: {
+              id: "sf-user-chart",
+            },
+            xaxis: {
+              categories: data
+                ? data.userSignupsPerMonth.map((us) => us.year + "-" + us.month)
+                : [],
+            },
+          }}
+          series={[
+            {
+              name: "signups",
+              data: data ? data.userSignupsPerMonth.map((us) => us.count) : [],
+            },
+          ]}
+          type="line"
+          width={"100%"}
+          height={320}
+        />
       </div>
     </div>
   );

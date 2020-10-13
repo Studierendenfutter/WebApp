@@ -10,7 +10,6 @@ import Checkmark from "../../components/Checkmark";
 import RadioButton from "../../components/RadioButton";
 
 import "./Settings.css";
-import Loader from "../../components/Loader";
 
 const dayEnums = [
   "mondays",
