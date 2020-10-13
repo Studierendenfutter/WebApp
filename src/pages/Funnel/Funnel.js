@@ -123,11 +123,11 @@ export default function Funnel() {
   return (
     <div className="sf-funnel">
       {funnelStep === 0 && (
-        <FunnelStep title="Hey lass uns loslegen! Wie möchtest du dich anmelden?">
+        <FunnelStep title="Hey, lass uns loslegen! Wie möchtest du dich anmelden?">
           <div className="sf-funnel-button-group">
             <button className="sf-funnel-big-button" onClick={nextStep}>
               In 7 Fragen schnell zum <br />
-              Individuellen Lunchletter
+              individuellen Lunchletter
             </button>
             <button
               className="sf-funnel-big-button"
@@ -204,7 +204,7 @@ export default function Funnel() {
       )}
       {funnelStep === 2 && (
         <FunnelStep
-          title={`Perfekt du bekommst den Lunchletter an ${userData.email}! An welchen Tagen möchtest du den Lunchletter haben?`}
+          title={`Perfekt, du bekommst den Lunchletter an ${userData.email}! An welchen Tagen möchtest du den Lunchletter haben?`}
         >
           <div>
             {dayNames.map((dayName, i) => (
@@ -483,12 +483,14 @@ export default function Funnel() {
         </FunnelStep>
       )}
       <div style={{ marginTop: "10px" }}>
-        <ProgressBar
-          percent={
-            (Math.min(TOTAL_FUNNEL_STEPS + 1, funnelStep + 1) * 100) /
-            (TOTAL_FUNNEL_STEPS + 1)
-          }
-        />
+        {funnelStep > 0 && (
+          <ProgressBar
+            percent={
+              (Math.min(TOTAL_FUNNEL_STEPS, funnelStep) * 100) /
+              TOTAL_FUNNEL_STEPS
+            }
+          />
+        )}
       </div>
     </div>
   );
