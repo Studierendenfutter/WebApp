@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLogin from "../../components/AdminLogin";
 import fetchStatistics from "../../services/backend/fetchStatistics";
+import RTChart from "react-rt-chart";
 
 import "./Stats.css";
+
+const useForceUpdate = () => useState()[1];
 
 export default function Stats() {
   const [, setPassword] = useState();
@@ -12,6 +15,10 @@ export default function Stats() {
     const stats = await fetchStatistics(password);
     setData(stats);
   };
+
+  useEffect(() => {
+    setInterval(useForceUpdate, 1000);
+  });
 
   if (!data) {
     return (
@@ -56,7 +63,7 @@ export default function Stats() {
         </div>
         <div className="sf-stats-big-number">
           <span className="sf-stats-big-number-number">
-            {((data.emailsSendToday / data.emailsOpenedToday) * 100).toFixed(2)}
+            {((data.emailsOpenedToday / data.emailsSendToday) * 100).toFixed(2)}
           </span>
           <span>% opened today</span>
         </div>

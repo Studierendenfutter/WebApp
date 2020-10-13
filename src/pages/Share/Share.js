@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import {
   EmailShareButton,
   FacebookShareButton,
+  FacebookMessengerShareButton,
   LinkedinShareButton,
   TelegramShareButton,
   RedditShareButton,
@@ -12,12 +13,15 @@ import {
 import {
   EmailIcon,
   FacebookIcon,
+  FacebookMessengerIcon,
   LinkedinIcon,
   RedditIcon,
   TelegramIcon,
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+
+import "./Share.css";
 
 export default function Share() {
   const shareData = {
@@ -36,37 +40,35 @@ export default function Share() {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <h1 style={{ textAlign: "center" }}>
-        Teile Studierendenfutter mit deinen Freunden
-      </h1>
       <div>
-        <div>
-          <WhatsappShareButton {...shareData}>
-            <WhatsappIcon size={115} round={true} />
-          </WhatsappShareButton>
-          <TelegramShareButton {...shareData}>
-            <TelegramIcon size={115} round={true} />
-          </TelegramShareButton>
-          <FacebookShareButton {...shareData}>
-            <FacebookIcon size={115} round={true} />
-          </FacebookShareButton>
-        </div>
-        <div>
-          <RedditShareButton {...shareData}>
-            <RedditIcon size={115} round={true} />
-          </RedditShareButton>
-          <LinkedinShareButton {...shareData}>
-            <LinkedinIcon size={115} round={true} />
-          </LinkedinShareButton>
-          <TwitterShareButton {...shareData}>
-            <TwitterIcon size={115} round={true} />
-          </TwitterShareButton>
-        </div>
-        <div>
-          <EmailShareButton {...shareData}>
-            <EmailIcon size={115} round={true} />
-          </EmailShareButton>
-        </div>
+        <WhatsappShareButton {...shareData}>
+          <WhatsappIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </WhatsappShareButton>
+        <TelegramShareButton {...shareData}>
+          <TelegramIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </TelegramShareButton>
+        <FacebookMessengerShareButton {...shareData}>
+          <FacebookMessengerIcon
+            size={115}
+            round={true}
+            iconFillColor="#FFFCDC"
+          />
+        </FacebookMessengerShareButton>
+        <EmailShareButton {...shareData}>
+          <EmailIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </EmailShareButton>
+        <FacebookShareButton {...shareData}>
+          <FacebookIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </FacebookShareButton>
+        <TwitterShareButton {...shareData}>
+          <TwitterIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </TwitterShareButton>
+        <LinkedinShareButton {...shareData}>
+          <LinkedinIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </LinkedinShareButton>
+        <RedditShareButton {...shareData}>
+          <RedditIcon size={115} round={true} iconFillColor="#FFFCDC" />
+        </RedditShareButton>
       </div>
     </div>
   );
