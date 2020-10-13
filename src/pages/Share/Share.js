@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -37,10 +37,19 @@ export default function Share() {
     share();
   }, []);
 
-  const copyText = () => {
+  const [copied, setCopied] = useState(false);
+
+  function copyText() {
+    var tempInput = document.createElement("input");
     const text = shareData.text + " " + shareData.url;
-    navigator.clipboard.writeText(text);
-  };
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 5000);
+  }
 
   return (
     <div
@@ -87,6 +96,11 @@ export default function Share() {
           </svg>
         </div>
       </div>
+      {copied && (
+        <div style={{ textAlign: "center", color: "#FFFCDC" }}>
+          <label>In Zwischenablage kopiert.</label>
+        </div>
+      )}
     </div>
   );
 }
