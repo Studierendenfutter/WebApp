@@ -147,7 +147,7 @@ export default function Funnel() {
             type="text"
             value={userData.email}
             onChange={(e) => {
-              updateUserData("email", e.target.value);
+              updateUserData("email", e.target.value.replace(" ", ""));
             }}
             placeholder="ich.habe@hunger.de"
           />
@@ -411,9 +411,28 @@ export default function Funnel() {
       )}
       {funnelStep === 8 && (
         <FunnelStep
-          title={`Cool ${userData.name}! Wir haben dir gerade eine Bestätigungsmail gesendet. Bitte bestätige den
+          title={`Cool${
+            userData.name ? " " + userData.name : ""
+          }! Wir haben dir gerade eine Bestätigungsmail gesendet. Bitte bestätige den
         Link um ab sofort den Lunchletter zu erhalten.`}
-        />
+        >
+          <p>
+            Keine Bestätigungsmail erhalten? Das kannst du tun:
+            <ul>
+              <li>
+                Die Mail könnte in deinem Spamordner gelandet sein. Vielleicht
+                hilft ein Blick dort hinein.
+              </li>
+              <li>
+                Auch nicht im Spam gefunden? Schreib uns an{" "}
+                <a href="mailto:moin@studierendenfutter.de">
+                  moin@studierendenfutter.de
+                </a>
+                und wir helfen dir gerne weiter.{" "}
+              </li>
+            </ul>
+          </p>
+        </FunnelStep>
       )}
       {funnelStep === 99 && (
         <FunnelStep title="Flott zu deinem Lunchletter: Dann benötigen wir nur noch deine Mailadresse:">
@@ -421,7 +440,7 @@ export default function Funnel() {
             type="text"
             value={userData.email}
             onChange={(e) => {
-              updateUserData("email", e.target.value);
+              updateUserData("email", e.target.value.replace(" ", ""));
             }}
             placeholder="ich.habe@hunger.de"
           />

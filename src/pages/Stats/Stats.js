@@ -64,7 +64,7 @@ export default function Stats() {
         </div>
       </div>
       <div>
-        <h2 className="sf-stats-heading">Emails</h2>
+        <h2 className="sf-stats-heading">Emails send per day</h2>
         <Chart
           options={{
             chart: {
@@ -80,11 +80,11 @@ export default function Stats() {
           }}
           series={[
             {
-              name: "emails send",
+              name: "emails opened",
               data: data ? data.emailsOpenedDaily.map((eod) => eod.count) : [],
             },
             {
-              name: "emails opened",
+              name: "emails send",
               data: data ? data.emailsSendDaily.map((eod) => eod.count) : [],
             },
           ]}
@@ -94,7 +94,7 @@ export default function Stats() {
         />
       </div>
       <div>
-        <h2 className="sf-stats-heading">Users</h2>
+        <h2 className="sf-stats-heading">New Signups</h2>
         <Chart
           options={{
             chart: {
