@@ -257,6 +257,11 @@ export default function Funnel() {
               Nein
             </button>
           </div>
+          <p style={{ textAlign: "center" }}>
+            Obacht: Bis zum 31. Oktober sind Semesterferien. Wenn du ab sofort
+            den Lunchletter erhalten möchtest, wähle "Ja" aus. Das kannst du
+            später in deinen Einstellungen wieder ändern.
+          </p>
           {lastStepButton}
         </FunnelStep>
       )}
