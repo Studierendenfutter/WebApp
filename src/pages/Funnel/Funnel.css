@@ -47,6 +47,16 @@
   margin-right: 2em;
 }
 
+.sf-button-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
 @media (max-width: 600px) {
   .sf-funnel-button-group {
     flex-direction: column;

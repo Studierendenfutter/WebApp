@@ -28,6 +28,7 @@ export default function Funnel() {
   const [emailValid, setEmailValid] = useState(true);
   const [agbValid, setAgbValid] = useState(true);
   const [canteensValid, setCanteensValid] = useState(true);
+  const [lastEmailStep, setLastEmailStep] = useState();
 
   useEffect(() => {
     if (!userData.canteens && canteens) {
@@ -189,6 +190,7 @@ export default function Funnel() {
                 onClick={() => {
                   if (checkEmail()) {
                     if (agbAccepted) {
+                      setLastEmailStep(funnelStep);
                       nextStep();
                       setEmailValid(true);
                       setAgbValid(true);
@@ -413,12 +415,24 @@ export default function Funnel() {
         <FunnelStep
           title={`Cool${
             userData.name ? " " + userData.name : ""
-          }! Wir haben dir gerade eine Bestätigungsmail gesendet. Bitte bestätige den
+          }! Wir haben dir gerade eine Bestätigungsmail an ${
+            userData.email
+          } gesendet. Bitte bestätige den
         Link um ab sofort den Lunchletter zu erhalten.`}
         >
           <p>
             Keine Bestätigungsmail erhalten? Das kannst du tun:
             <ul>
+              <li>
+                Entdeckst du hier einen Tippfehler: {userData.email}?{" "}
+                <button
+                  className="sf-button-link"
+                  onClick={() => setFunnelStep(lastEmailStep)}
+                >
+                  Springe zurück
+                </button>{" "}
+                und korrigiere ihn schnell.
+              </li>
               <li>
                 Die Mail könnte in deinem Spamordner gelandet sein. Vielleicht
                 hilft ein Blick dort hinein.
@@ -427,8 +441,8 @@ export default function Funnel() {
                 Auch nicht im Spam gefunden? Schreib uns an{" "}
                 <a href="mailto:moin@studierendenfutter.de">
                   moin@studierendenfutter.de
-                </a>
-                und wir helfen dir gerne weiter.{" "}
+                </a>{" "}
+                und wir helfen dir gerne weiter.
               </li>
             </ul>
           </p>
@@ -488,6 +502,7 @@ export default function Funnel() {
               onClick={() => {
                 if (checkEmail()) {
                   if (agbAccepted) {
+                    setLastEmailStep(funnelStep);
                     postUser(userData);
                     setFunnelStep(TOTAL_FUNNEL_STEPS);
                     setEmailValid(true);
