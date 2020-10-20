@@ -11,6 +11,7 @@ import Canteens from "./pages/Canteens";
 import Meals from "./pages/Meals";
 import Share from "./pages/Share/Share";
 import Stats from "./pages/Stats/Stats";
+import Pause from "./pages/Pause";
 
 const App = () => (
   <React.StrictMode>
@@ -21,6 +22,9 @@ const App = () => (
         </Route>
         <Route path="/cancel">
           <Cancel />
+        </Route>
+        <Route path="/pause">
+          <Pause />
         </Route>
         <Route path="/settings">
           <Settings />
