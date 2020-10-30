@@ -41,9 +41,6 @@ const App = () => (
         <Route path="/share">
           <Share />
         </Route>
-        <Route path="/stats">
-          <Stats />
-        </Route>
       </Switch>
     </Router>
   </React.StrictMode>
