@@ -10,7 +10,6 @@ import { hydrate, render } from "react-dom";
 import Canteens from "./pages/Canteens";
 import Meals from "./pages/Meals";
 import Share from "./pages/Share/Share";
-import Stats from "./pages/Stats/Stats";
 import Pause from "./pages/Pause";
 
 const App = () => (

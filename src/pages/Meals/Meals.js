@@ -69,11 +69,34 @@ export default function Meals() {
       style={{ display: "flex", justifyContent: "center" }}
     >
       <div style={{ width: "400px" }}>
+        <div style={{ height: "140px", background: "#004049" }}>
+          <a href="https://studierendenfutter.de">
+            <img
+              alt="Kochmütze mit gekreutzten Gabel und Messer."
+              style={{
+                "text-align": "center",
+                height: "115px",
+                "margin-top": "15px",
+              }}
+              height="115"
+              src="https://studierendenfutter.de/wp-content/uploads/2020/10/Mail-Header-1.png"
+            />
+          </a>
+          <div
+            style={{
+              "border-top": "10px solid #004049",
+              "border-left": "200px solid #004049",
+              "border-right": "200px solid #ffffff",
+              "border-bottom": "10px solid #ffffff",
+            }}
+          ></div>
+        </div>
         <p
           style={{
             fontSize: "24px",
             fontFamily: '"Amatic SC Regular",garamond,sans-serif',
             textAlign: "center",
+            margin: "20px",
           }}
         >
           Hey,
