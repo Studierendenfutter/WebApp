@@ -74,12 +74,12 @@ export default function Meals() {
             <img
               alt="Kochmütze mit gekreutzten Gabel und Messer."
               style={{
-                "text-align": "center",
-                height: "115px",
+                textAlign: "center",
+                width: "100%",
                 "margin-top": "15px",
               }}
               height="115"
-              src="https://studierendenfutter.de/wp-content/uploads/2020/10/Mail-Header-1.png"
+              src="https://studierendenfutter.de/wp-content/uploads/2020/12/Mail-Header-SANTA-v2.png"
             />
           </a>
           <div
