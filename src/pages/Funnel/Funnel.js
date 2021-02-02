@@ -142,71 +142,10 @@ export default function Funnel() {
           </div>
         </FunnelStep>
       )}
+      
       {funnelStep === 1 && (
-        <FunnelStep title="Alles klar: Verrätst du uns zuerst, an welche Mail-Adresse wir den Lunchletter schicken sollen?">
-          <input
-            type="text"
-            value={userData.email}
-            onChange={(e) => {
-              updateUserData("email", e.target.value.replace(" ", ""));
-            }}
-            placeholder="ich.habe@hunger.de"
-          />
-          {!emailValid && (
-            <label>Bitte gib eine echte E-Mail-Adresse ein.</label>
-          )}
-          <div style={{ padding: "20px" }}>
-            <Checkmark
-              inputProps={{ type: "checkbox", checked: agbAccepted }}
-              label={
-                <span style={{ fontSize: "16px" }}>
-                  Ich bin damit einverstanden, den Lunchletter per Mail zu
-                  erhalten und stimme dafür der Verarbeitung meiner
-                  personenbezogenen Daten gemäß der{" "}
-                  <a
-                    href="https://studierendenfutter.de/datenschutzerklaerung"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Datenschutzerklärung
-                  </a>{" "}
-                  zu.
-                </span>
-              }
-              onClick={(e) => setAgbAccepted(e.target.checked)}
-            />
-            {!agbValid && (
-              <label>
-                Wir können dich nur zum Lunchletter anmelden, wenn du der
-                Verarbeitung deiner Daten zustimmst.
-              </label>
-            )}
-          </div>
-          <div>
-            {lastStepButton}
-            {
-              <button
-                className="sf-funnel-next-button"
-                onClick={() => {
-                  if (checkEmail()) {
-                    if (agbAccepted) {
-                      setLastEmailStep(funnelStep);
-                      nextStep();
-                      setEmailValid(true);
-                      setAgbValid(true);
-                    } else setAgbValid(false);
-                  } else setEmailValid(false);
-                }}
-              >
-                Weiter
-              </button>
-            }
-          </div>
-        </FunnelStep>
-      )}
-      {funnelStep === 2 && (
         <FunnelStep
-          title={`Perfekt, du bekommst den Lunchletter an ${userData.email}! An welchen Tagen möchtest du den Lunchletter haben?`}
+          title={`Alles klar: An welchen Tagen möchtest du deinen Lunchletter denn erhalten?`}
         >
           <div>
             {dayNames.map((dayName, i) => (
@@ -234,7 +173,7 @@ export default function Funnel() {
           </div>
         </FunnelStep>
       )}
-      {funnelStep === 3 && (
+      {funnelStep === 2 && (
         <FunnelStep title="Auch in den Semesterferien?">
           <div>
             <button
@@ -260,7 +199,7 @@ export default function Funnel() {
           {lastStepButton}
         </FunnelStep>
       )}
-      {funnelStep === 4 && (
+      {funnelStep === 3 && (
         <FunnelStep
           title={`Ist notiert. Welche Gerichte sollen wir in deinen persönlichen Lunchletter aufnehmen?`}
         >
@@ -288,7 +227,7 @@ export default function Funnel() {
           </div>
         </FunnelStep>
       )}
-      {funnelStep === 5 && (
+      {funnelStep === 4 && (
         <FunnelStep
           title="Wunderbar. Für welche Orte möchtest du das Mittagsangebot angezeigt bekommen?
             Du kannst dies auch noch genauer festlegen:"
@@ -354,7 +293,7 @@ export default function Funnel() {
           </div>
         </FunnelStep>
       )}
-      {funnelStep === 6 && (
+      {funnelStep === 5 && (
         <FunnelStep
           title="Super, wir haben es fast geschafft. Jetzt müssen wir nur noch wissen, welchen Preis wir
         dir für die Mittagsgerichte anzeigen sollen:"
@@ -383,7 +322,7 @@ export default function Funnel() {
           </div>
         </FunnelStep>
       )}
-      {funnelStep === 7 && (
+      {funnelStep === 6 && (
         <FunnelStep
           title="Fertig, wir haben deinen Lunchletter konfiguriert. Sehr gerne würden wir dich auch mit
         Namen ansprechen:"
@@ -408,6 +347,70 @@ export default function Funnel() {
             >
               Weiter
             </button>
+          </div>
+        </FunnelStep>
+      )}
+      {funnelStep === 7 && (
+        <FunnelStep title={`Zack${
+          userData.name ? " " + userData.name : ""
+        }, das war's schon. Verrätst du uns noch, an welche Mail-Adresse wir deinen Lunchletter schicken sollen?`}>
+          <input
+            type="text"
+            value={userData.email}
+            onChange={(e) => {
+              updateUserData("email", e.target.value.replace(" ", ""));
+            }}
+            placeholder="ich.habe@hunger.de"
+          />
+          {!emailValid && (
+            <label>Bitte gib eine echte E-Mail-Adresse ein.</label>
+          )}
+          <div style={{ padding: "20px" }}>
+            <Checkmark
+              inputProps={{ type: "checkbox", checked: agbAccepted }}
+              label={
+                <span style={{ fontSize: "16px" }}>
+                  Ich bin damit einverstanden, den Lunchletter per Mail zu
+                  erhalten und stimme dafür der Verarbeitung meiner
+                  personenbezogenen Daten gemäß der{" "}
+                  <a
+                    href="https://studierendenfutter.de/datenschutzerklaerung"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Datenschutzerklärung
+                  </a>{" "}
+                  zu.
+                </span>
+              }
+              onClick={(e) => setAgbAccepted(e.target.checked)}
+            />
+            {!agbValid && (
+              <label>
+                Wir können dich nur zum Lunchletter anmelden, wenn du der
+                Verarbeitung deiner Daten zustimmst.
+              </label>
+            )}
+          </div>
+          <div>
+            {lastStepButton}
+            {
+              <button
+                className="sf-funnel-next-button"
+                onClick={() => {
+                  if (checkEmail()) {
+                    if (agbAccepted) {
+                      setLastEmailStep(funnelStep);
+                      nextStep();
+                      setEmailValid(true);
+                      setAgbValid(true);
+                    } else setAgbValid(false);
+                  } else setEmailValid(false);
+                }}
+              >
+                Weiter
+              </button>
+            }
           </div>
         </FunnelStep>
       )}
