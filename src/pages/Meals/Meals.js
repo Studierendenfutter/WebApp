@@ -63,6 +63,7 @@ export default function Meals() {
     fetch();
   }, []); // eslint-disable-line
 
+  console.log(meals)
   return (
     <div
       className="sf-meals"
@@ -79,7 +80,7 @@ export default function Meals() {
                 "margin-top": "15px",
               }}
               height="115"
-              src="https://studierendenfutter.de/wp-content/uploads/2020/12/Mail-Header-SANTA-v2.png"
+              src="https://studierendenfutter.de/wp-content/uploads/2020/10/Mail-Header.png"
             />
           </a>
           <div
@@ -141,11 +142,12 @@ export default function Meals() {
                           style={{ width: "50px", textAlign: "center" }}
                         >
                           <p>{formatPrice(meal.price)} €</p>
-                          <img
+                          {meal.types.map(type=><img
                             alt="Meal Icon"
                             style={{ width: "20px" }}
-                            src={getIconLinkFromNotes(meal.type)}
-                          />
+                            src={getIconLinkFromNotes(type.name)}
+                          />)}
+                          
                         </td>
                       </tr>
                     </table>
@@ -168,52 +170,48 @@ export default function Meals() {
               <td align="center" valign="middle" height="50">
                 <img alt="cow" style={{ width: "20px" }} src={cowIcon} />
               </td>
-              <td
-                align="left"
-                valign="middle"
-                height="50"
-                style={{ paddingLeft: "10px" }}
-              >
-                <span>Enthält Fleisch</span>
-              </td>
-            </tr>
-            <tr>
               <td align="center" valign="middle" height="50">
                 <img style={{ width: "20px" }} src={fishIcon} alt="fish" />
               </td>
-              <td
-                align="left"
-                valign="middle"
-                height="50"
-                style={{ paddingLeft: "10px" }}
-              >
-                <span>Enthält Fisch</span>
-              </td>
-            </tr>
-            <tr>
               <td align="center" valign="middle" height="50">
                 <img style={{ width: "20px" }} src={vegetarianIcon} />
               </td>
-              <td
-                align="left"
-                valign="middle"
-                height="50"
-                style={{ paddingLeft: "10px" }}
-              >
-                <span>Ist vegetarisch</span>
-              </td>
-            </tr>
-            <tr>
               <td align="center" valign="middle" height="50">
                 <img style={{ width: "20px" }} src={veganIcon} />
               </td>
-              <td
-                align="left"
+            </tr>
+            <tr>
+            <td
+                align="center"
                 valign="middle"
                 height="50"
-                style={{ paddingLeft: "10px" }}
+                style={{ width: "100px" }}
               >
-                <span>Ist vegan</span>
+                <span>Fleisch</span>
+              </td>
+              <td
+                align="center"
+                valign="middle"
+                height="50"
+                style={{ width: "100px" }}
+              >
+                <span>Fisch</span>
+              </td>
+              <td
+                align="center"
+                valign="middle"
+                height="50"
+                style={{ width: "100px" }}
+              >
+                <span>Vegetarisch</span>
+              </td>
+              <td
+                align="center"
+                valign="middle"
+                height="50"
+                style={{ width: "100px" }}
+              >
+                <span>Vegan</span>
               </td>
             </tr>
           </table>
