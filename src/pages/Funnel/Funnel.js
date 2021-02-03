@@ -340,7 +340,6 @@ export default function Funnel() {
             {lastStepButton}
             <button
               onClick={() => {
-                postUser(userData);
                 nextStep();
               }}
               className="sf-funnel-next-button"
@@ -404,6 +403,7 @@ export default function Funnel() {
                       nextStep();
                       setEmailValid(true);
                       setAgbValid(true);
+                      postUser(userData);
                     } else setAgbValid(false);
                   } else setEmailValid(false);
                 }}
