@@ -239,9 +239,6 @@ export default function Settings() {
         </div>
       )}
       <div className="sf-settings-buttons">
-        <button className="sf-settings-button" onClick={saveUserDate}>
-          Speichern
-        </button>
         <a
           className="sf-settings-cancel-link"
           href={
@@ -250,6 +247,9 @@ export default function Settings() {
         >
           Abmelden
         </a>
+        <button className="sf-settings-button" onClick={saveUserDate}>
+          Speichern
+        </button>
       </div>
     </div>
   );
