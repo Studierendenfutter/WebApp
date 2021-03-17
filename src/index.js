@@ -11,6 +11,7 @@ import Canteens from "./pages/Canteens";
 import Meals from "./pages/Meals";
 import Share from "./pages/Share/Share";
 import Pause from "./pages/Pause";
+import ShareMeals from "./pages/ShareMeals/ShareMeals";
 
 const App = () => (
   <React.StrictMode>
@@ -37,8 +38,11 @@ const App = () => (
         <Route path="/meals">
           <Meals />
         </Route>
-        <Route path="/share">
+        <Route exact path="/share">
           <Share />
+        </Route>
+        <Route exact path="/share/canteen/:canteenId/meals">
+          <ShareMeals />
         </Route>
       </Switch>
     </Router>

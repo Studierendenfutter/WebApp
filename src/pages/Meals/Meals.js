@@ -4,6 +4,8 @@ import getUserMeals from "../../services/backend/getUserMeals";
 import formatPrice from "../../services/utils/formatPrice";
 
 import "./Meals.css";
+import getAllMeals from "../../services/backend/getAllMeals";
+import getDateString from "../../services/utils/getDateString";
 
 const cowIcon =
   "http://studierendenfutter.de/wp-content/uploads/2020/07/Icon-Cow-2@2x.png";
@@ -58,12 +60,16 @@ export default function Meals() {
 
   useEffect(() => {
     async function fetch() {
-      setMeals(await getUserMeals(uId, code));
+      if (uId && code && uId !== "" && code !== "")
+        setMeals(await getUserMeals(uId, code));
+      else {
+        setMeals(await getAllMeals({ date: getDateString() }));
+      }
     }
     fetch();
   }, []); // eslint-disable-line
 
-  console.log(meals)
+  console.log(meals);
   return (
     <div
       className="sf-meals"
@@ -141,13 +147,18 @@ export default function Meals() {
                           class="sf-email-meal-right"
                           style={{ width: "50px", textAlign: "center" }}
                         >
-                          <p>{formatPrice(meal.price)} €</p>
-                          {meal.types.map(type=><img
-                            alt="Meal Icon"
-                            style={{ width: "20px" }}
-                            src={getIconLinkFromNotes(type.name)}
-                          />)}
-                          
+                          <p>
+                            {meal.price
+                              ? formatPrice(meal.price) + " €"
+                              : formatPrice(meal.prices[0].price) + " €"}
+                          </p>
+                          {meal.types.map((type) => (
+                            <img
+                              alt="Meal Icon"
+                              style={{ width: "20px" }}
+                              src={getIconLinkFromNotes(type.name)}
+                            />
+                          ))}
                         </td>
                       </tr>
                     </table>
@@ -181,7 +192,7 @@ export default function Meals() {
               </td>
             </tr>
             <tr>
-            <td
+              <td
                 align="center"
                 valign="middle"
                 height="50"
