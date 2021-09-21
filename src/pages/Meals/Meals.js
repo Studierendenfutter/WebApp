@@ -86,7 +86,7 @@ export default function Meals() {
                 "margin-top": "15px",
               }}
               height="115"
-              src="https://studierendenfutter.de/wp-content/uploads/2020/10/Mail-Header.png"
+              src="https://studierendenfutter.de/wp-content/uploads/2021/02/Header-Desktop-s.png"
             />
           </a>
           <div

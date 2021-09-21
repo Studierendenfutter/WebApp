@@ -10,10 +10,7 @@ import {
 } from "react-share";
 import getCanteenMeals from "../../services/backend/getCanteenMeals";
 import getDateString from "../../services/utils/getDateString";
-import ReactGA from "react-ga";
 import "./ShareMeals.css";
-
-ReactGA.initialize("G-C70TXSZWTW");
 
 export default function ShareMeals() {
   const { canteenId } = useParams();
@@ -68,7 +65,6 @@ export default function ShareMeals() {
       textFromMeals(canteen[0]);
     };
     fetch();
-    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []); // eslint-disable-line
 
   return (

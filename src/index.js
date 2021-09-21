@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import Funnel from "./pages/Funnel/Funnel";
@@ -12,42 +12,51 @@ import Meals from "./pages/Meals";
 import Share from "./pages/Share/Share";
 import Pause from "./pages/Pause";
 import ShareMeals from "./pages/ShareMeals/ShareMeals";
+import ReactGA from "react-ga";
 
-const App = () => (
-  <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route path="/confirm">
-          <Confirm />
-        </Route>
-        <Route path="/cancel">
-          <Cancel />
-        </Route>
-        <Route path="/pause">
-          <Pause />
-        </Route>
-        <Route path="/settings">
-          <Settings />
-        </Route>
-        <Route path="/funnel">
-          <Funnel />
-        </Route>
-        <Route path="/canteens">
-          <Canteens />
-        </Route>
-        <Route path="/meals">
-          <Meals />
-        </Route>
-        <Route exact path="/share">
-          <Share />
-        </Route>
-        <Route exact path="/share/canteen/:canteenId/meals">
-          <ShareMeals />
-        </Route>
-      </Switch>
-    </Router>
-  </React.StrictMode>
-);
+ReactGA.initialize("UA-179039974-2");
+
+const App = () => {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  });
+
+  return (
+    <React.StrictMode>
+      <Router>
+        <Switch>
+          <Route path="/confirm">
+            <Confirm />
+          </Route>
+          <Route path="/cancel">
+            <Cancel />
+          </Route>
+          <Route path="/pause">
+            <Pause />
+          </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
+          <Route path="/funnel">
+            <Funnel />
+          </Route>
+          <Route path="/canteens">
+            <Canteens />
+          </Route>
+          <Route path="/meals">
+            <Meals />
+          </Route>
+          <Route exact path="/share">
+            <Share />
+          </Route>
+          <Route exact path="/share/canteen/:canteenId/meals">
+            <ShareMeals />
+          </Route>
+        </Switch>
+      </Router>
+    </React.StrictMode>
+  );
+};
 
 const rootElement = document.getElementById("root");
 if (rootElement.hasChildNodes()) {

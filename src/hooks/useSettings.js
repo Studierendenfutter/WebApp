@@ -4,7 +4,6 @@ import putUserSettings from "../services/backend/putUserSettings";
 
 export default function useSettings(uId, code) {
   const [settings, setSettings] = useState({});
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

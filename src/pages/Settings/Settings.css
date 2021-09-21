@@ -1,3 +1,7 @@
+.sf-settings h1 {
+  color: black !important;
+}
+
 .sf-settings input {
   border: none;
   border-bottom: 1px solid gray;

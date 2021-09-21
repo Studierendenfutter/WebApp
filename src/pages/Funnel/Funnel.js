@@ -6,6 +6,7 @@ import useUserCategories from "../../hooks/useUserCategories";
 import postUser from "../../services/backend/postUser";
 import useCanteens from "../../hooks/useCanteens";
 import { dayNames, mealTypes, prices, localNames } from "../../constants";
+import ReactGA from "react-ga";
 
 import "./Funnel.css";
 import RadioButton from "../../components/RadioButton";
@@ -41,7 +42,8 @@ export default function Funnel() {
   }, [canteens, setUserData]); // eslint-disable-line
 
   const checkEmail = () => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(userData.email).toLowerCase());
   };
 
@@ -64,8 +66,13 @@ export default function Funnel() {
 
   const userCategories = useUserCategories();
 
-  const [funnelStep, setFunnelStep] = useState(0);
-
+  const [funnelStep, _setFunnelStep] = useState(0);
+  const setFunnelStep = (i) => {
+    ReactGA.pageview(
+      window.location.pathname + "/step" + i + window.location.search
+    );
+    _setFunnelStep(i);
+  };
   const [agbAccepted, setAgbAccepted] = useState(false);
 
   const nextStep = () => {
@@ -124,12 +131,14 @@ export default function Funnel() {
   return (
     <div className="sf-funnel">
       {funnelStep === 0 && (
-        <FunnelStep title="Hey, lass uns loslegen! Wie möchtest du dich anmelden?">
-          <div className="sf-funnel-button-group">
+        <FunnelStep title="Hier kannst du dich anmelden:">
+          <div className="">
             <button className="sf-funnel-big-button" onClick={nextStep}>
               In 7 Fragen schnell zum <br />
               individuellen Lunchletter
             </button>
+            <br />
+            <br />
             <button
               className="sf-funnel-big-button"
               onClick={() => {
@@ -139,10 +148,12 @@ export default function Funnel() {
               Direkt anmelden ohne <br />
               individuelle Einstellungen
             </button>
+            <br />
+            <br />
           </div>
         </FunnelStep>
       )}
-      
+
       {funnelStep === 1 && (
         <FunnelStep
           title={`Alles klar: An welchen Tagen möchtest du deinen Lunchletter denn erhalten?`}
@@ -175,6 +186,10 @@ export default function Funnel() {
       )}
       {funnelStep === 2 && (
         <FunnelStep title="Auch in den Semesterferien?">
+          <p>
+            Bis zum 11.10. sind noch Semesterferien. Wenn du den Lunchletter ab
+            sofort erhalten möchtest, wähle hier "Ja" aus.
+          </p>
           <div>
             <button
               className="sf-funnel-big-button"
@@ -350,9 +365,11 @@ export default function Funnel() {
         </FunnelStep>
       )}
       {funnelStep === 7 && (
-        <FunnelStep title={`Zack${
-          userData.name ? " " + userData.name : ""
-        }, das war's schon. Verrätst du uns noch, an welche Mail-Adresse wir deinen Lunchletter schicken sollen?`}>
+        <FunnelStep
+          title={`Zack${
+            userData.name ? " " + userData.name : ""
+          }, das war's schon. Verrätst du uns noch, an welche Mail-Adresse wir deinen Lunchletter schicken sollen?`}
+        >
           <input
             type="text"
             value={userData.email}

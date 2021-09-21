@@ -1,0 +1,11 @@
+.react-datepicker__input-container > input {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 1em 2em;
+}
+
+.sf-pause-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

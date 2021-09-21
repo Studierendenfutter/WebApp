@@ -1,0 +1,10 @@
+.sf-big-button {
+    max-width: 400px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}

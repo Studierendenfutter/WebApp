@@ -1,6 +1,9 @@
 .sf-funnel {
   margin-bottom: 100px;
+  background: #51bc51;
+  color: white;
 }
+
 .sf-funnel-canteens-wrapper {
   margin-left: 20px;
 }
@@ -9,9 +12,10 @@
   max-width: 400px;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 30px;
   font-size: 1.2rem;
-  background: white;
+  background: var(--primary-color);
+  color: white
 }
 
 .sf-funnel-next-button {

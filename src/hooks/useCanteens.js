@@ -9,7 +9,7 @@ export default function useCanteens(filter) {
       setCanteens(canteens);
     }
     fetch();
-  }, []);
+  }, []); // eslint-disable-line
 
   return canteens;
 }
