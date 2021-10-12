@@ -186,10 +186,10 @@ export default function Funnel() {
       )}
       {funnelStep === 2 && (
         <FunnelStep title="Auch in den Semesterferien?">
-          <p>
+          {/*<p>
             Bis zum 11.10. sind noch Semesterferien. Wenn du den Lunchletter ab
             sofort erhalten möchtest, wähle hier "Ja" aus.
-          </p>
+          </p>*/}
           <div>
             <button
               className="sf-funnel-big-button"
