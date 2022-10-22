@@ -4,9 +4,9 @@ import "./Checkmark.css";
 
 export default function Checkmark({ label, inputProps, onClick }) {
   return (
-    <label class="sf-checkmark-container">
+    <label className="sf-checkmark-container">
       <input type="sf-checkmark-checkbox" {...inputProps} onClick={onClick} />
-      <span class="sf-checkmark-checkmark"></span>
+      <span className="sf-checkmark-checkmark"></span>
       {label}
     </label>
   );

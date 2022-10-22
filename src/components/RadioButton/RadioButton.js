@@ -4,13 +4,13 @@ import "./RadioButton.css";
 
 export default function RadioButton({ label, inputProps, onClick }) {
   return (
-    <label class="sf-radio-button-container">
+    <label className="sf-radio-button-container">
       <input
         type="sf-radio-button-checkbox"
         {...inputProps}
         onClick={onClick}
       />
-      <span class="sf-radio-button-checkmark"></span>
+      <span className="sf-radio-button-checkmark"></span>
       {label}
     </label>
   );

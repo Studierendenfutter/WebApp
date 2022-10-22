@@ -13,6 +13,7 @@ import Share from "./pages/Share/Share";
 import Pause from "./pages/Pause";
 import ShareMeals from "./pages/ShareMeals/ShareMeals";
 import ReactGA from "react-ga";
+import VoucherFunnel from "./pages/VoucherFunnel/VoucherFunnel";
 
 ReactGA.initialize("UA-179039974-2");
 
@@ -51,6 +52,9 @@ const App = () => {
           </Route>
           <Route exact path="/share/canteen/:canteenId/meals">
             <ShareMeals />
+          </Route>
+          <Route path="/vouchers/:voucherId/funnel">
+            <VoucherFunnel />
           </Route>
         </Switch>
       </Router>

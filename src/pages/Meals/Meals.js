@@ -118,9 +118,9 @@ export default function Meals() {
           )}
           {meals.map((canteen) => {
             return (
-              <div class="sf-email-canteen" style={{ textAlign: "left" }}>
+              <div className="sf-email-canteen" style={{ textAlign: "left" }}>
                 <h4
-                  class="sf-email-canteen-card-header"
+                  className="sf-email-canteen-card-header"
                   style={{
                     marginTop: "10px",
                     fontSize: "20px",
@@ -133,18 +133,18 @@ export default function Meals() {
                 {Object.values(canteen.meals).map(
                   (meal) => (
                     <table
-                      class="sf-email-meal"
+                      className="sf-email-meal"
                       style={{ marginLeft: "20px", marginBottom: "10px" }}
                     >
                       <tr>
                         <td
-                          class="sf-email-meal-left"
+                          className="sf-email-meal-left"
                           style={{ width: "320px" }}
                         >
                           <p>{meal.name}</p>
                         </td>
                         <td
-                          class="sf-email-meal-right"
+                          className="sf-email-meal-right"
                           style={{ width: "50px", textAlign: "center" }}
                         >
                           <p>
@@ -169,14 +169,14 @@ export default function Meals() {
             );
           }, "")}
         </div>
-        <div class="sf-email-legend" style={{ textAlign: "left" }}>
+        <div className="sf-email-legend" style={{ textAlign: "left" }}>
           <h4
-            class="sf-email-legend-title"
+            className="sf-email-legend-title"
             style={{ fontSize: "20px", marginBottom: "7px" }}
           >
             Legende
           </h4>
-          <table class="sf-email-legend-points" style={{ padding: "20px" }}>
+          <table className="sf-email-legend-points" style={{ padding: "20px" }}>
             <tr>
               <td align="center" valign="middle" height="50">
                 <img alt="cow" style={{ width: "20px" }} src={cowIcon} />

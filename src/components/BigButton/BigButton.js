@@ -3,7 +3,7 @@ import "./BigButton.css";
 
 export default function BigButton({ children, ...props }) {
   return (
-    <button class="sf-big-button" {...props}>
+    <button className="sf-big-button" {...props}>
       {children}
     </button>
   );
