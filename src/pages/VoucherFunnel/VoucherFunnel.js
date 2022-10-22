@@ -33,7 +33,7 @@ export default function VoucherFunnel() {
   }
   if (!voucherWrapper) {
     return (
-      <div>
+      <div style={{ minHeight: "100px" }}>
         <p>
           Hier solltest du eigentlich einen Gutschein bekommen. Leider
           funktioniert die Verbindung zum Server gerade nicht. Bitte versuche es
@@ -44,7 +44,7 @@ export default function VoucherFunnel() {
   }
   if (voucherWrapper.amountOfVoucherCodesAvailable === 0) {
     return (
-      <div>
+      <div style={{ minHeight: "200px" }}>
         <p>Leider sind keine Gutscheine mehr verfügbar.</p>
       </div>
     );
