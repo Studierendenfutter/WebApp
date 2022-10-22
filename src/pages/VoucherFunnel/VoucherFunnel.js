@@ -26,7 +26,6 @@ export default function VoucherFunnel() {
     try {
       setVoucherRequestStatus(VOUCHER_REQUEST_PENDING);
       const voucher_code = await postVoucherUser(voucherId, uId, code);
-      console.log(voucher_code);
       setVoucherRequestStatus(VOUCHER_REQUEST_SUCCESS);
     } catch {
       setVoucherRequestStatus(VOUCHER_REQUEST_FAILURE);
@@ -51,7 +50,7 @@ export default function VoucherFunnel() {
     );
   }
   return (
-    <div style={{}}>
+    <div style={{ minHeight: "100px" }}>
       {voucherRequestStatus === VOUCHER_REQUEST_NOT_SEND && (
         <>
           <Checkmark
