@@ -72,16 +72,28 @@ export default function VoucherFunnel() {
         </div>
       )}
       {voucherRequestStatus === VOUCHER_REQUEST_SUCCESS && (
-        <>
-          <p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <p style={{ textAlign: "center" }}>
             Alles klaro, Gutschein kommt. Viel Spaß und guten Appetit bei Mach
             Mittag!
           </p>
-        </>
+        </div>
       )}
       {voucherRequestStatus === VOUCHER_REQUEST_FAILURE && (
-        <>
-          <p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <p style={{ textAlign: "center" }}>
             Ey shit. Da lief was schief. Probier es nochmal oder schreib uns ne
             Email.
           </p>
@@ -90,7 +102,7 @@ export default function VoucherFunnel() {
           >
             NOCHMAL
           </BigButton>
-        </>
+        </div>
       )}
     </div>
   );
