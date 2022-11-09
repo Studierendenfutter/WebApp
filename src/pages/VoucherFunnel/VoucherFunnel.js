@@ -52,7 +52,13 @@ export default function VoucherFunnel() {
   return (
     <div style={{ minHeight: "100px" }}>
       {voucherRequestStatus === VOUCHER_REQUEST_NOT_SEND && (
-        <>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           <Checkmark
             inputProps={{
               type: "checkbox",
@@ -61,8 +67,9 @@ export default function VoucherFunnel() {
             label={voucherWrapper.voucher.short_description}
             onClick={() => setWantsToReceiveEmaill(!wantsToReceiveEmail)}
           />
+
           <BigButton onClick={sendVoucherRequest}>GIMME THAT VOUCHER</BigButton>
-        </>
+        </div>
       )}
       {voucherRequestStatus === VOUCHER_REQUEST_SUCCESS && (
         <>
